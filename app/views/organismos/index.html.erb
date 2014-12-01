@@ -1,0 +1,20 @@
+<script>
+<%= helper_script_dialog_create('openOrganismo','modal-organismo',new_organismo_path(:remote=>true,:listado=>true),"Nuevo Organismo",600,450) %>
+<%= helper_script_dialog_edit('openEditOrganismo','modal-organismo',"Editar Organismo",600,450) %>
+</script>
+
+<%
+cabecera = [{:size=>1, :name=>"ID"},
+            {:size=>4, :name=>"Nombre",:sort=>'nombre'},
+            {:size=>4, :name=>"Descripción"},
+            {:size=>1, :name=>"Codigo",:sort=>'codigo'},
+           ]
+%>
+<% if ! mobile_device? %>
+  <%= helper_datagrid_header("Listado de Organismos",{:controller=>'organismos', :action=>'search'},{:label=>'Nuevo Organismo',:action=>"return openOrganismo();", :remote=>true},cabecera,'listado-organismos') %>
+<% else %>
+  <%= helper_datagrid_header("Listado de Organismos",{:controller=>'organismos', :action=>'search'},{:label=>'Nuevo Organismo',:action=>new_organismo_path },cabecera,'listado-organismos') %>
+  <% end %>
+<div id="listado-organismos" class="paginaremota">
+<%= render partial: 'row_index' %>
+</div>

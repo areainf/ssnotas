@@ -1,0 +1,26 @@
+
+<%
+if @notas.length > 0 #si tiene elementos
+  @notas.each do |nota|
+      @nota=nota
+      $cssclass=cycle('list-line-odd', 'list-line-even')
+%>
+<%= render partial: 'single_row' %>
+<% end %>
+<div class="row">
+<div class="tfoot">
+<%= ajax_will_paginate @notas, :id=>"div_pag_ajax", :previous_label=>"&lt;&lt;Ant", :next_label=>"Sig&gt;&gt;", :remote=>"true" %>
+</div>
+</div>
+
+<%
+  else
+%>
+<div class="row">
+  <div  class="col-xs-12 col-sm-12 col-md-12  col-lg-12">
+  <h2>No se encontraron resultados</h2>
+  </div>
+</div>
+
+<% end %>
+

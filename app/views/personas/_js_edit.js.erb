@@ -1,0 +1,107 @@
+<script>
+/*
+ * Abre una ventana para crear nuevos Remitentes
+ * */
+function openNuevaEntidad(){
+    //Crea un div donde pondra el formulario
+    $('body').append("<div id='modal-entidad'></div>");
+    //Llama remotamente a la accion new del controlador entidades diciendole que muestre todos las entidades
+
+        url = "<%= url_for :controller =>"entidades", :action=>'new', :remote=>'true', :fixed_persona_id=>@persona.id  %>";
+
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , beforeSend: function(){/*alert("Antes de enviar");*/ }
+       , complete: function(){/*alert("Completo");*/}
+       , success: function(data){
+            $("#modal-entidad").html(data);
+       }
+    });
+    /*Especifica al div creado recientemente como dialog*/
+    $("#modal-entidad").dialog({
+        autoOpen: false,
+        height: 570,
+        width: 600,
+        modal: true,
+        title: 'Asociar un Cargo a la Persona',
+        close: function(event, ui) { $('#modal-entidad').remove();},
+
+    });
+    $("#modal-entidad").dialog( "open" );
+}
+
+$( document ).ready(function() {
+
+  /* Indica que al hacer click en el enlace con id link_open_nueva_entidad
+   * llame a la funcion de js openNuevaEntidad
+   * esto es para reemplazar el tag link_to_function que es deprecated en rails 4
+  */
+  $('#link_open_nueva_entidad').click(function() {
+    openNuevaEntidad();
+    return false;
+  });
+
+
+});
+
+/*Esta funcion es llamada luego de dar de alta una entidad*/
+function postCreateEntidad(entidadjson,paramsjson){
+    $("#modal-entidad").dialog( "close" );
+    window.location.reload(true);
+}
+function deleteEntidad(id){
+    url = "/entidades/"+id+"/delete";
+     $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"json"
+       , beforeSend: function(){/*alert("Antes de enviar");*/ }
+       , complete: function(){/*alert("Completo");*/}
+       , success: function(data){
+            if(data["error"]){
+                alert(data["msj"]);
+            }
+            else{
+                $("#entidad_"+id).remove();
+            }
+       }
+    });
+
+}
+function changeEsFacultad(id){
+
+    url = "/entidades/"+id+"/change_es_facultad";
+     $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"json"
+       , beforeSend: function(){/*alert("Antes de enviar");*/ }
+       , complete: function(){/*alert("Completo");*/}
+       , success: function(data){
+            if(data["error"]){
+                alert("No se pudo cambiar la condición");
+            }
+       }
+    });
+    //change_es_facultad
+}
+function changeEsActual(id){
+    //change_es_actual
+
+    url = "/entidades/"+id+"/change_es_actual";
+     $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"json"
+       , beforeSend: function(){/*alert("Antes de enviar");*/ }
+       , complete: function(){/*alert("Completo");*/}
+       , success: function(data){
+            if(data["error"]){
+                alert("No se pudo cambiar la condición");
+            }
+       }
+    });
+}
+</script>

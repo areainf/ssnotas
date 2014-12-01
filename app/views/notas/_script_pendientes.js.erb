@@ -1,0 +1,32 @@
+
+<script language="JavaScript">
+/*Muestra una vista rapida de la nota*/
+
+function openShortcut(id){
+    //Crea un div donde pondra el formulario
+    $('body').append("<div id='modal-shorcut-nota'></div>");
+    //Llama remotamente a la accion shortcut del controlador notas diciendole que muestre la nota con id
+    url = "<%= url_for :controller =>"notas", :action=>'shortcut_pendiente', :remote=>'true', :id => 'change_param_id' %>";
+    url = url.replace('change_param_id',id);
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , success: function(data){
+            $("#modal-shorcut-nota").html(data);
+       }
+    });
+    /*Especifica al div creado recientemente como dialog*/
+    $("#modal-shorcut-nota").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 600,
+        modal: true,
+        title: 'Detalle del Documento - [Esc] para salir',
+        close: function(event, ui) { $('#modal-shorcut-nota').remove();},
+
+    });
+    $("#modal-shorcut-nota").dialog( "open" );
+}
+
+</script>

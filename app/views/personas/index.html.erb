@@ -1,0 +1,25 @@
+<script>
+<%= helper_script_dialog_create('openPersona','modal-persona',new_persona_path(:remote=>true,:listado=>true),"Nueva Persona",600,450) %>
+<%= helper_script_dialog_edit('editPersona','modal-persona',"Editar Persona",600,450) %>
+</script>
+
+<%
+cabecera = [
+            {:size=>3, :name=>"Nombre",:sort=>'nombre'},
+            {:size=>3, :name=>"Apellido",:sort=>'apellido'},
+            {:size=>3, :name=>"Email",:sort=>'email'}
+           ]
+%>
+<% if ! mobile_device? %>
+  <%= helper_datagrid_header("Listado de Personas",{:controller=>'personas', :action=>'search'},{:label=>'Nueva Persona',:action=>"return openPersona();", :remote=>true},cabecera,'listado-personas') %>
+<% else %>
+  <%= helper_datagrid_header("Listado de Personas",{:controller=>'personas', :action=>'search'},{:label=>'Nueva Persona',:action=>new_persona_path },cabecera,'listado-personas') %>
+  <% end %>
+<div id="listado-personas" class="paginaremota">
+<%= render partial: 'row_index' %>
+</div>
+
+
+
+
+

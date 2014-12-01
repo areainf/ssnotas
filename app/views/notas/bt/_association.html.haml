@@ -1,0 +1,34 @@
+#nota-association
+  - md = @nota.parent.nil? && @nota.notas_asociadas.empty? ? 0 : 8
+  %h1= print @nota.notas_asociadas
+  .row
+    - if md > 0
+      %div{class: "col-md-#{md}"}
+        - if !@nota.parent.nil?
+          .space
+          %h1 Depende del siguiente Documento
+          .row
+            .col-md-12
+
+              .panel.panel-primary
+                .panel-heading
+                  %h3.panel-title Documento Principal
+                .panel-body
+                  = render "/notas/bt/show_fields", nota: @nota.parent
+        - if !@nota.notas_asociadas.empty?
+          .space
+          %h1 El Documento contiene la siguiente Documentación asociada
+          - @nota.notas_asociadas.each do |n|
+            .row
+              .col-md-12
+                .panel.panel-primary
+                  .panel-heading
+                    %h3.panel-title Documento Asociado
+                  .panel-body
+                    = render "/notas/bt/show_fields", nota: n
+
+    .col-md-4
+      = render "/notas/bt/asociar"
+    .clearfix
+= render '/notas/bt/js_association.js'
+    

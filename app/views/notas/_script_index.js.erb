@@ -1,0 +1,229 @@
+<script language="JavaScript">
+var text_bsq_av_disable=">>";
+var text_bsq_av_enable="<<";
+
+   $(function() {
+        $("#fecha_from" ).datepicker();
+        $("#fecha_to" ).datepicker();
+        // Executes a callback detecting changes with a frequency of 1 second
+        /*$("#nota_index_field_search").observe_field(1, function( ) {
+            tipo_nota = $("#nota_index_field_search_tipo_nota_id").val();
+            if (! is_bsq_av())
+                search_nota(this.value,tipo_nota);
+        });*/
+        /* Indica que al hacer click en el enlace con id btn-bsq-av
+         * llame a la funcion de js showhide_bsq_av
+         * esto es para reemplazar el tag link_to_function que es deprecated en rails 4
+         */
+          /*$('#btn-bsq-av').click(function() {
+            showhide_bsq_av();
+          });*/
+          /* Indica que al hacer click en el enlace con id btn-bsq-av-search
+         * llame a la funcion de js search_nota_avanzada();
+         */
+          /*$('#btn-bsq-av-search').click(function() {
+            search_nota_avanzada();
+          });*/
+
+          /*$(".shortcut_nota").mouseenter(function() {
+                var el = $(this);
+                var timeoutId = setTimeout(function() {
+                      start_id="shortcut_";
+                      id=el.attr('id').substr(start_id.length)
+                      openShortcut(id);
+                }, 1000);
+                el.mouseleave(function() {
+                    clearTimeout(timeoutId);
+                    //el.removeClass("hasBeen500ms");
+                });
+          });
+
+        showhide_bsq_av();*/
+   });
+/*function is_bsq_av(){
+    return $('#bsq-av-fechas').is(":visible");
+
+}
+
+function showhide_bsq_av(){
+    val = $("#btn-bsq-av").val();
+    //if (val == text_bsq_av_disable){
+    //if ($('#bsq-av-fechas').is(":visible")){
+    if (is_bsq_av()){
+         //ocultar
+         $("#bsq-av-fechas").hide("slow");
+         $("#btn-bsq-av").html(text_bsq_av_disable);
+    }
+    else{
+        //mostrar
+         $("#bsq-av-fechas").show("slow");
+         $("#btn-bsq-av").html(text_bsq_av_enable);
+    }
+}
+*/
+function isBsqAv(){
+    return $('#divsearch').is(":visible");
+
+}
+
+function ShowHideSearch(){
+  if (isBsqAv()){
+         //ocultar
+         $("#divsearch").hide("slow");
+         $("#textoBusqueda").html("Buscar");
+    }
+    else{
+        //mostrar
+         $("#divsearch").show("slow");
+         $("#textoBusqueda").html("Ocultar  ");
+    }
+
+}
+
+/*
+function search_nota_type(){
+    if (! is_bsq_av()){
+        tipo_nota = $("#nota_index_field_search_tipo_nota_id").val();
+        text = $("#nota_index_field_search").val();
+        search_nota(text,tipo_nota);
+    }
+}
+function search_nota_avanzada(){
+    text = $("#nota_index_field_search").val();
+    tipo_nota = $("#nota_index_field_search_tipo_nota_id").val();
+    desde = $("#fecha_from").val();
+    hasta = $("#fecha_to").val();
+    search_nota(text,tipo_nota,desde,hasta);
+}*/
+/*
+ * Invoca mediante ajax la busqueda
+ * */
+/*
+function search_nota(texto, tipo_nota,desde,hasta){
+    if (desde == undefined)
+        desde = '';
+    if (hasta == undefined)
+        hasta = '';
+    url = "<%= url_for :controller =>"notas", :action=>'search', :remote=>'true', :direction => params[:direction], :sort => params[:sort], :term=>'change_termino',:tipo_nota_id=>'change_tipo_nota_id',:fecha_desde=>'change_fecha_desde', :fecha_hasta=>'change_fecha_hasta' %>"
+    url = url.replace('change_termino',encodeURIComponent(texto));
+    url = url.replace('change_tipo_nota_id',tipo_nota);
+    url = url.replace('change_fecha_desde',desde);
+    url = url.replace('change_fecha_hasta',hasta);
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , beforeSend: function(){
+                    beforeSearchRecord('table-notas');
+       }
+       , complete: function(){
+       }
+       , success: function(data){
+           afterSearchRecord('table-notas',data);
+       }
+    });
+}
+*/
+/*Muestra una vista rapida de la nota*/
+
+function openShortcut(id){
+    //Crea un div donde pondra el formulario
+    $('body').append("<div id='modal-shorcut-nota'></div>");
+    //Llama remotamente a la accion shortcut del controlador notas diciendole que muestre la nota con id
+    url = "<%= url_for :controller =>"notas", :action=>'shortcut', :remote=>'true', :id => 'change_param_id' %>";
+    url = url.replace('change_param_id',id);
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , error: function(jqXHR, textStatus, errorThrown ){
+           alert(jqXHR.responseText);
+           if (jqXHR.status == "401"){
+               url = '<%=  url_for :controller => "home", :action => "index" %>';
+               window.location = url;
+           }
+       }
+
+       , success: function(data){
+            $("#modal-shorcut-nota").html(data);
+       }
+    });
+    /*Especifica al div creado recientemente como dialog*/
+    $("#modal-shorcut-nota").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 600,
+        modal: true,
+        title: 'Detalle del Documento - [Esc] para salir',
+        close: function(event, ui) { $('#modal-shorcut-nota').remove();},
+
+    });
+    $("#modal-shorcut-nota").dialog( "open" );
+    enlace = $('#nota_'+id);
+    $("#modal-shorcut-nota").dialog( "option", "position", { my: "center center", at: "center center", of: enlace  } );
+    return false;
+}
+
+/*Va el parametro page, porque si se estan listando 10 registros y estas en la pagina dos
+  y despues le pones que muestre mil y hay menos de mil da error porque en la pagina 2 no hay
+  nada, entonces cada vez que cambias la cantidad de rows, o el termino de busqueda pasas page como 1
+  solo debe tenerse en cuenta el valor anterior en caso de ordenacion*/
+  function datagrid_search_action(page,newsort){
+    url = "<%= url_for :controller =>"notas", :action=>'search', :remote=>'true' %>"
+    texto = "";
+    filas = $("#perpage").val();
+    direction = $("#direction").val();
+    sort = $("#sort").val();
+    if(page == undefined)
+      page = $("#page").val();
+
+    u = new UrlHelper(url);
+
+    u.setParam('rows',filas);
+    u.setParam('page',page);
+    if (isBsqAv()){
+        u.setParam('tipo_nota_id', $("#nota_index_field_search_tipo_nota_id").val());
+        u.setParam('fecha_desde', $("#fecha_from").val());
+        u.setParam('fecha_hasta', $("#fecha_to").val());
+        texto = encodeURIComponent($("#datagrid_search_field").val());
+    }
+    u.setParam('term',texto);
+
+    if (newsort == sort){
+        u.setParam('sort',sort);
+        //dir = u.getParam('direction');
+        if (direction.toUpperCase() === "ASC")
+            u.setParam('direction','desc');
+        else
+            u.setParam('direction','asc');
+    }
+    else{
+      u.setParam('sort',newsort);
+      u.setParam('direction','asc');
+    }
+    $("#sort").val(u.getParam('sort'));
+    $("#direction").val(u.getParam('direction'));
+    $("#page").val(u.getParam('page'));
+
+
+    $.ajax({
+       type: 'GET'
+       , url: u.getFullUrl()
+       , dataType:'html'
+       , beforeSend: function(){
+                beforeSearchRecordV1('listado-notas');
+         }
+       , complete: function(){
+
+         }
+       , success: function(data){
+           afterSearchRecordV1('listado-notas',data);
+         }
+      });
+  }
+
+function SortBy(text){
+  return datagrid_search_action($("#page").val(),text);
+}
+
+</script>

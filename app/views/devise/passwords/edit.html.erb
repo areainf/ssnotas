@@ -1,0 +1,25 @@
+<div class="toolbar">
+    <%= render :partial => "devise/shared/links" %>
+</div>
+<div class="form-v1">
+<h1>Cambiar contraseña de acceso</h2>
+
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.hidden_field :reset_password_token %>
+
+  <div class="field-space">
+      <%= f.label :password, "Nueva Contraseña" %><br />
+      <%= f.password_field :password , :class => "field-v1"%>
+  </div>
+
+  <div class="field-space">
+      <%= f.label :password_confirmation, "Confirmar Contraseña" %><br />
+      <%= f.password_field :password_confirmation, :class => "field-v1" %>
+ </div>
+
+  <div><%= f.submit "Cambiar mi contraseña" %></div>
+<% end %>
+
+
+</div>

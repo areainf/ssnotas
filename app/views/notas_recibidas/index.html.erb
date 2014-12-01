@@ -1,0 +1,20 @@
+
+
+<%
+cabeceras = [
+            {:size=>2, :name=>"Remitente",:sort=>'remitente'},
+            {:size=>2, :name=>"Destinatario", :sort=>'destinatario'},
+            {:size=>2, :name=>"Descripción",:sort=>'tema'},
+            {:size=>2, :name=>"Observaciones"},
+            {:size=>1, :name=>"Fecha", :sort=>'fecha_nota'},
+            {:size=>1, :name=>"Ingreso", :sort=>'fecha_ingreso'},
+            {:size=>1, :name=>"T. Documento", :sort=>'tipo_nota_id'}
+           ]
+%>
+<%= helper_datagrid_header("Documentación Recibida",{:controller=>'notas_recibidas', :action=>'search'},{},cabeceras,'listado-notas') %>
+
+
+  <div id="listado-notas" class="paginaremota">
+      <%= render partial: 'row_index' %>
+  </div>
+

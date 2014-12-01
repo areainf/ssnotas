@@ -1,0 +1,205 @@
+<script>
+$( document ).ready(function() {
+    /*Inicializar campos cuando termina de cargar la pagina*/
+    showhide_replace_all_es_actual();
+    if ($('#persona_fullname').length>0){
+         <% if( @entidad.persona) %>
+            setPersona("<%= raw @entidad.persona.fullname %>",<%= raw @entidad.persona_id %>);
+         <% else %>
+            $('#persona_fullname').val("<%= raw params["persona_fullname"] %>");
+         <% end %>
+    }
+    <% if !params[:es_facultad]  %>
+        <% if( @entidad.dependencia) %>
+            $('#dependencia_fullname').val("<%= raw @entidad.dependencia.alias_or_fullname %>");
+        <% else %>
+            $('#dependencia_fullname').val("<%= raw params["dependencia_fullname"] %>");
+        <% end %>
+    <% end %>
+    <% if( @entidad.cargo) %>
+        $('#cargo_fullname').val("<%= raw @entidad.cargo.nombre %>");<%    else %>
+        $('#cargo_fullname').val("<%= raw params["cargo_fullname"] %>");<%    end %>//$('#text_persona_id').html("<%= @entidad.persona_id%>");<%    if  !params[:es_facultad]  %>//$('#text_dependencia_id').html("<%= @entidad.dependencia_id%>");<%    end %>//$('#text_cargo_id').html("<%= @entidad.cargo_id%>");
+        if ($('#persona_fullname').length>0){
+            // Below is the name of the textfield that will be autocomplete
+            $('#persona_fullname').autocomplete({
+                minLength: 2,
+                source: '<%= personas_path(:json) %>',
+                focus: function(event, ui) {
+                    $('#persona_fullname').val(ui.item.apellido+", "+ ui.item.nombre );
+                    return false;
+                },
+                select: function(event, ui) {
+                    setPersona(ui.item.apellido+", "+ ui.item.nombre,ui.item.id );
+                    return false;
+                }
+            }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                return $( "<li>" ).append( "<a>" +  item.apellido+", "+ item.nombre+"</a>" ).appendTo( ul );
+            };
+        }
+        <%  if  !params[:es_facultad]  %>
+            // Below is the name of the textfield that will be autocomplete
+            $('#dependencia_fullname').autocomplete({
+                minLength: 2,
+                source: '<%= dependencias_path(:json) %>',
+                focus: function(event, ui) {
+                    $('#dependencia_fullname').val( ui.item.alias_or_fullname );
+                    return false;
+                },
+                select: function(event, ui) {
+                    //setDependencia("["+ui.item.codigo+"] "+ ui.item.nombre, ui.item.id);
+                    setDependencia(ui.item.alias_or_fullname, ui.item.id);
+                    return false;
+                }
+              }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                    return $( "<li>" ).append( "<a>"+ item.alias_or_fullname+"</a>" ).appendTo( ul );
+              };
+
+        <% end %>
+        // Below is the name of the textfield that will be autocomplete
+        $('#cargo_fullname').autocomplete({
+            minLength: 2,
+            source: '<%= cargos_path(:json) %>',
+            focus: function(event, ui) {
+                $('#cargo_fullname').val(ui.item.nombre );
+                return false;
+            },
+            select: function(event, ui) {
+                setCargo(ui.item.nombre, ui.item.id);
+                return false;
+            }
+         }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+            return $( "<li>" ).append( "<a>" + item.nombre+"</a>" ).appendTo( ul );
+         };
+
+    });
+
+    /*
+    * Funcion para crear una nueva persona, los datos son tomados de un
+    * campo de texto con la forma, apellido, nombres
+    */
+    function crearPersona(fieldname){
+        fullname= $("#"+fieldname).val();
+        pos = fullname.indexOf(",");
+        apellido = "";
+        nombre = "";
+        if(pos>0){
+            apellido = fullname.substring(0,pos);
+            nombre = fullname.substring(pos+1,fullname.length);
+        }
+        else
+            apellido = fullname;
+            apellido = trim(apellido);
+            nombre = trim(nombre);
+            var url = "<%= url_for :controller=>"personas", :action => "create" %>";
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: url,
+                data: {"persona[nombre]":nombre, "persona[apellido]": apellido},
+                success: function(data){
+                    setPersona(data["apellido"]+", "+data["nombre"],data["id"]);
+                },
+                error: function(xhr, type, data){
+                    alert("ERROR crear persona");
+                    d=JSON.parse(xhr.responseText);
+                    for (i in d) {
+                        alert(d[i]);
+                    };
+                }
+
+            });
+
+            return false; // avoid to execute the actual submit of the form.
+        }
+
+    /*
+    * Funcion para crear un nuevo cargo persona, los datos son tomados de un campo de texto
+    */
+    function crearCargo(fieldname){
+        nombre= $("#"+fieldname).val();
+        var url = "<%= url_for :controller=>"cargos", :action => "create" %>";
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            data: {"cargo[nombre]":nombre},
+            success: function(data){
+                setCargo(data["nombre"],data["id"]);
+            },
+            error: function(xhr, type, data){
+                d=JSON.parse(xhr.responseText);
+                for (i in d) {
+                    alert(d[i]);
+                };
+            }
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    }
+
+    /*
+    * Abre una ventana para crear nuevas dependencias
+    * */
+    function openNuevaDependencia(){
+        $('body').append("<div id='modal-dependencia'></div>");
+        $.ajax({
+            type: "GET"
+            , url: "<%= url_for :controller =>"dependencias", :action=>'new', :remote=>'true' %> "
+            , dataType:"html"
+            , beforeSend: function(){
+                //alert("Antes de enviar");
+            }
+            , complete: function(){
+                //alert("Completo");
+            }
+            , success: function(data){
+                $("#modal-dependencia").html(data);
+            }
+        });
+        $("#modal-dependencia").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 600,
+            modal: true,
+            title: 'Nueva Dependencia',
+            close: function(event, ui) { $('#modal-dependencia').remove();},
+        });
+        $("#modal-dependencia").dialog( "open" );
+    }
+
+    function postCreateDependencia(datajson){
+        data = JSON.parse(datajson);
+        //setDependencia("["+data['codigo']+"] "+data['nombre'],data['id']);
+        setDependencia(data['alias_or_fullname'],data['id']);
+        $("#modal-dependencia").dialog( "close" );
+    }
+    /*Setea todos los campos necesarios para una persona seleccionada*/
+    function setPersona(fullname, id){
+        $('#persona_fullname').val(fullname);
+        $('#entidad_persona_id').val(id);
+        $('#text_persona_id').html(id+ " - "+fullname);
+    }
+    /*Setea todos los campos necesarios para una dependencia seleccionada*/
+    function setDependencia(fullname, id){
+        $('#dependencia_fullname').val("");
+        $('#entidad_dependencia_id').val(id);
+        $('#text_dependencia_id').html(id+ " - "+fullname);
+    }
+    /*Setea todos los campos necesarios para un cargo seleccionado*/
+    function setCargo(nombre, id){
+        $('#cargo_fullname').val(nombre);
+        $('#entidad_cargo_id').val(id);
+        $('#text_cargo_id').html(id+ " - "+nombre);
+    }
+
+    /*Muestra o Esconde el checkbox que indica cambiar a es_actual a false para todas las otras entidades con
+    el mismo cargo en la dependencia seleccionada*/
+    function showhide_replace_all_es_actual(){
+        show = $("#entidad_es_actual").is(':checked');
+        if (show)
+            $("#divreplace_all_es_actual").show();
+        else
+            $("#divreplace_all_es_actual").hide();
+    }
+
+</script>

@@ -1,0 +1,25 @@
+<%= form_for(@nota_attachment) do |f| %>
+  <% if @nota_attachment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@nota_attachment.errors.count, "error") %> prohibited this nota_attachment from being saved:</h2>
+
+      <ul>
+      <% @nota_attachment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nota_id %><br>
+    <%= f.number_field :nota_id %>
+  </div>
+  <div class="field">
+    <%= f.label :filescan %><br>
+    <%= f.text_field :filescan %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

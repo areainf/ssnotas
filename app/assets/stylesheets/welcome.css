@@ -1,0 +1,126 @@
+@import "bootstrap";
+*{
+	font-family: sans-serif;
+}
+@media (max-width: 1152px){
+    *{
+         font-size: 10pt;
+     }
+}
+@media (min-width: 1152px) {
+    *{
+         font-size: 12pt;
+     }
+}
+body {
+  background-image: url("sme3.jpg");
+  background-position: top center;
+  background-repeat: no-repeat;
+/*
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+ */
+  background-size: 100% 100%;
+  margin: 0;
+  padding: 0;
+  background-attachment: fixed;
+}
+
+/* INICIO BARRA SUPERIOR DE ACCIONES */
+/*
+ .toolbar a{
+    margin: 0px auto;
+    background: -webkit-gradient(linear, center top, center bottom, from(#ededed), to(#fff));
+    background-image: linear-gradient(#ededed, #fff);
+    border-radius: 12px;
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.1);
+    color: #222;
+    vertical-align: middle;
+    line-height: 20px;
+    text-decoration: none;
+    padding:2px 10px;
+    color:#333;
+    text-decoration: underline;
+    overflow: visible;
+}
+.toolbar a:hover{
+    color: #339933;
+    border-bottom-color: #76C00A;
+
+}
+*/
+/* FIN BARRA SUPERIOR DE ACCIONES */
+
+
+/*ESTILO PARA MENSAJES, NOTICIAS, ERRORES*/
+/*Contenedor principal de los mensajes, noticias y errores*/
+.main-message-error{
+
+  margin: 0 auto;
+}
+.alert, .notice, .error{
+    padding: 5px;
+    font-size: 14px;
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+}
+.alert{
+    background-color: #729AB3;
+}
+.notice{
+    background-color: #6AA35F;
+}
+.error{
+    background-color: #EE2630;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+

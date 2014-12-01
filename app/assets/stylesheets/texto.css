@@ -1,0 +1,12 @@
+ul.record{
+    padding-left: 15px;
+    list-style: none;
+}
+.record_key{
+    font-weight: bold;
+    color: green;
+    font-size: 110%;
+}
+.record_value{
+    color: marron;
+}

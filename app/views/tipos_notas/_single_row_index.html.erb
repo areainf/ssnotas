@@ -1,0 +1,29 @@
+<%
+if @cssclass.nil?
+  @cssclass= 'list-line-odd'
+end
+%>
+  <div id="tipo_nota_<%= @tipo_nota.id %>" class="row <%= $cssclass unless $cssclass.nil? %>">
+    <div class="datagrid-cell">
+      <div id="dependencia_<%= @tipo_nota.id %>_nombre" class="col-xs-5 col-sm-5 col-md-5  col-lg-5"><%= @tipo_nota.nombre %></div>
+      <div id="dependencia_<%= @tipo_nota.id %>_descripcion" class="col-xs-5 col-sm-5 col-md-5  col-lg-5"><%= @tipo_nota.descripcion %></div>
+      <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2"  style="text-align: right;">
+         <div class="btn-group" style="margin-top: 3px; margin-bottom: 3px;">
+           <%= link_to image_tag("view16x16.png",{:align => "middle",  :alt=>"Ver", :border => "0"}), @tipo_nota ,{:title =>"Ver más información", :class=>"boton-row"}%>
+
+           <% if ! mobile_device? %>
+              <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), "#",{:title =>"Editar", :class=>"boton-row", :onClick=>"return editTipoNota('#{edit_tipo_nota_path(@tipo_nota,:remote=>true)}');"}%>
+              <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), delete_tipo_nota_path(@tipo_nota), {data: { confirm: 'Eliminara el Tipo de Documentación. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row",:remote=>true }%>
+           <% else %>
+
+                 <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), edit_tipo_nota_path(@tipo_nota),{:title =>"Editar", :class=>"boton-row"}%>
+                 <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), @tipo_nota, {method: :delete, data: { confirm: 'Eliminara el Tipo de Documentación. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row"}%>
+           <% end %>
+
+           <%=
+           #
+           %>
+         </div>
+      </div>
+    </div>
+  </div>

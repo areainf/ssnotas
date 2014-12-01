@@ -1,0 +1,29 @@
+<% #Llamado cuando se crea un entidad con ajax
+#Simplemente informar el resultado del metodo create
+%>
+
+
+<% if $ok %>
+   $("#entidad_<%= @entidad.id %>").fadeOut("slow",new function(){$("#entidad_<%= @entidad.id %>").remove();});
+
+<%
+   else
+%>
+$('body').append("<div id='tempmsj'></div>");
+$('#tempmsj').dialog({
+                        autoOpen: false,
+                        resizable: false,
+                        show: 'fade',
+                        hide: 'fade',
+                        height: 140,
+                        modal: true,
+                        title: 'No se pudo eliminar',
+                        close: function (event, ui) { $('#tempmsj').remove();},
+                        open: function (event, ui) {
+                          $('#tempmsj').html('<p>Existen registros que dependenden de esta Relación</p>');
+                        }
+                    }).dialog("open");
+
+setTimeout(function () { $('#tempmsj').dialog("close"); }, 2000);
+
+<% end %>

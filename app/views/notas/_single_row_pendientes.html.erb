@@ -1,0 +1,47 @@
+<%
+if @cssclass.nil?
+  @cssclass= 'list-line-odd'
+end
+%>
+  <div id="nota_temporal_<%= @nota_temporal.id %>" class="row <%= $cssclass unless $cssclass.nil? %>">
+      <div id="nota_temporal<%= @nota_temporal.id %>_id" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <% if !@nota_temporal.remitente.nil? %>
+            <span class="etiqueta_object"><%= @nota_temporal.remitente.cargoname %></span>
+        <% else %>
+            <span class="etiqueta_no-object"><%= @nota_temporal.texto_remitente %></span>
+        <% end %>
+      </div>
+      <div id="nota_temporal<%= @nota_temporal.id %>_id" class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <% if !@nota_temporal.destinatario.nil? %>
+            <span class="etiqueta_object"><%= @nota_temporal.destinatario.cargoname %></span>
+        <% else %>
+            <span class="etiqueta_no-object"><%= @nota_temporal.texto_destinatario %></span>
+        <% end %>
+      </div>
+      <div id="nota_temporal<%= @nota_temporal.id %>_id" class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+        <%= l @nota_temporal.fecha_nota %>
+      </div>
+      <div id="<%= "shortcut_#{@nota_temporal.id}" %>" class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+        <%= @nota_temporal.tema %>
+      </div>
+      <div id="nota_temporal<%= @nota_temporal.id %>_id" class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+        <%= @nota_temporal.descripcion %>
+      </div>
+      <div id="nota_temporal<%= @nota_temporal.id %>_id" class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+        <%= l @nota_temporal.fecha_carga %>
+      </div>
+      <div id="nota_temporal<%= @nota_temporal.id %>_id" class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+        <%= @nota_temporal.tipo_nota.nombre %>
+      </div>
+      <div id="nota_temporal<%= @nota_temporal.id %>_id" class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+        <%= @nota_temporal.cargado_por.username %>
+      </div>
+
+      <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2"  style="text-align: right;">
+         <div class="btn-group col-button">
+           <%= link_to image_tag("24/procesar.png",{:align => "middle", :alt=>"Procesar", :border => "0"}), edit_pendiente_nota_path(@nota_temporal),{:title =>"Procesar Nota", :class=>"boton-row"}%>
+           <a href="#" class="boton-row" onclick="openShortcut('<%= @nota_temporal.id %>');" title="Ver"><%= image_tag("24/hand.png",{:align => "middle", :alt=>"Ver", :border => "0"})%></a>
+         </div>
+      </div>
+    </div>
+  </div>

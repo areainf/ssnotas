@@ -1,0 +1,23 @@
+<div class="toolbar">
+    <div style="float: right;"><%= link_to  image_tag("add16x16.png",{:align => "middle"})+'Nuevo Usuario', new_user_path %></div>
+</div>
+
+<h1>Usuarios</h1>
+<div class="datagrid">
+<table id="table-tipo_notas" >
+    <thead>
+  <tr id="header-tipo_notas">
+      <th>Usuario</th>
+      <th>Email</th>
+      <th>Rol</th>
+      <th>Dependencia</th>
+      <th>Persona</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%= render partial: 'row_index' %>
+    </tbody>
+</table>
+
+</div>

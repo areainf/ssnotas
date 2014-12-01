@@ -1,0 +1,66 @@
+<%
+cabecera = [{:size=>1, :name=>"ID"},
+            {:size=>5, :name=>"Nombre",:sort=>'nombre'},
+            {:size=>4, :name=>"Descripción"}
+           ]
+%>
+<% if ! mobile_device? %>
+  <%= helper_datagrid_header("Listado de Cargos",{:controller=>'cargos', :action=>'search'},{:label=>'Nuevo Cargo',:action=>"return openNuevoCargo();", :remote=>true},cabecera,'listado-cargos') %>
+<% else %>
+  <%=helper_datagrid_header("Listado de Cargos",{:controller=>'cargos', :action=>'search'},{:label=>'Nuevo Cargo',:action=>new_cargo_path},cabecera,'listado-cargos')%>
+<% end %>
+<div id="listado-cargos" class="paginaremota">
+<%= render partial: 'row_index' %>
+</div>
+<script>
+/*
+ * Abre una ventana para crear nuevos Cargos
+ * */
+function openNuevoCargo(){
+    $('body').append("<div id='modal-cargo'></div>");
+    url = "<%= url_for :controller =>"cargos", :action=>'new', :remote=>'true'  %>";
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , success: function(data){
+            $("#modal-cargo").html(data);
+       }
+    });
+    /*Especifica al div creado recientemente como dialog*/
+    $("#modal-cargo").dialog({
+        autoOpen: false,
+        height: 350,
+        width: 600,
+        modal: true,
+        title: 'Crear un nuevo Cargo',
+        close: function(event, ui) { $('#modal-cargo').remove();},
+    });
+    $("#modal-cargo").dialog( "open" );
+}
+
+
+function openEditCargo(url){
+    //Crea un div donde pondra el formulario
+    $('body').append("<div id='modal-cargo'></div>");
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , success: function(data){
+            $("#modal-cargo").html(data);
+       }
+    });
+    /*Especifica al div creado recientemente como dialog*/
+    $("#modal-cargo").dialog({
+        autoOpen: false,
+        height: 350,
+        width: 600,
+        modal: true,
+        title: 'EditarCargo',
+        close: function(event, ui) { $('#modal-cargo').remove();},
+
+    });
+    $("#modal-cargo").dialog( "open" );
+}
+</script>

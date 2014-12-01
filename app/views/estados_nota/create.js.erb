@@ -1,0 +1,20 @@
+<% #Llamado cuando se crea un estado_nota con ajax
+#Simplemente informar el resultado del metodo create
+%>
+<% if @estado_nota.valid? %>
+
+  $("#message-remote").html('<p class="alert">El Estado se guardo correctamente</p>');
+  $("#listado-estado_nota").append("<%= escape_javascript(render("single_row_index"))%>");
+<%
+   else
+       strerror="<h3>"+pluralize(@estado_nota.errors.count, "Error")+ " produjo que el Estado no se guardara:</h3>"
+
+       @estado_nota.errors.each_with_index do |msg, i|
+          strerror +='<p class="error">'+ msg[1] +'</p>'
+       end
+
+%>
+
+$("#message-remote").html('<%= raw(strerror) %>');
+
+<% end %>

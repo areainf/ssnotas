@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nombre: MyString
+  descripcion: MyString
+  codigo: 1
+  subcodigo: 1
+
+two:
+  nombre: MyString
+  descripcion: MyString
+  codigo: 1
+  subcodigo: 1

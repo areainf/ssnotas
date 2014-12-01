@@ -1,0 +1,48 @@
+<%
+if $cssclass.nil?
+  $cssclass= 'list-line-odd'
+end
+%>
+  <div id="nota_<%= $nota_temporal.id %>" class="row <%= $cssclass unless $cssclass.nil? %>">
+    <% if $nota_temporal.ingresada? %>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><%= $nota_temporal.nota.remitente.cargoname %></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><%= $nota_temporal.nota.destinatario.cargoname %></div>
+    <% else %>
+
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><%= if !$nota_temporal.remitente.nil? then $nota_temporal.remitente.cargoname else $nota_temporal.texto_remitente end %></div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><%= if !$nota_temporal.destinatario.nil? then $nota_temporal.destinatario.cargoname else $nota_temporal.texto_destinatario end %></div>
+    <% end%>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= l $nota_temporal.fecha_nota unless $nota_temporal.fecha_nota.nil? %>
+    </div>
+
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <%= truncate($nota_temporal.tema, lenght: 200) %>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= $nota_temporal.codigo %>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= $nota_temporal.cargado_por.username %>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= str_attr_estado($nota_temporal.estado) %>
+      <%= if !$nota_temporal.nota.nil? then l $nota_temporal.nota.fecha_ingreso end %>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= $nota_temporal.tipo_nota.nombre unless $nota_temporal.tipo_nota.nil?%>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"   style="text-align: right;">
+      <div class="btn-group col-button">
+        <%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver", :border => "0"}), $nota_temporal,{:title =>"Ver Nota", :class=>"boton-row"} %>
+        <% if $nota_temporal.estado == Nota::ESTADO_PENDIENTE %>
+            <%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Editar", :alt=>"Editar", :border => "0"}), edit_nota_temporal_path($nota_temporal),{:title =>"Editar Nota", :class=>"boton-row"} %>
+            <%= link_to image_tag("delete16x16.png",{:align => "middle", :title =>"Eliminar", :alt=>"Eliminar", :border => "0"}), $nota_temporal, method: :delete, data: { confirm: 'Eliminara la Nota. ¿Esta seguro?'},:title =>"Eliminar", :class=>"boton-row"  %>
+        <% end %>
+
+
+
+
+      </div>
+    </div>
+</div>

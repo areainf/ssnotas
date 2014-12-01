@@ -1,0 +1,26 @@
+#notas
+  .box-toolbar
+    %ul
+      %li
+        = link_to image_tag("list16x16.png",{:align => "middle", :title =>"Ir al Listado", :alt=>"Listar", :border => "0"})+"Listado", notas_path 
+        
+  %h1 Editar Documento
+  %ul.nav.nav-tabs{role: "tablist"}
+    %li.active
+      %a{"data-toggle" => "tab", href: "#notas-form"}
+        Formulario
+    %li
+      %a{"data-toggle" => "tab", href: "#notas-parent"}
+        Asociaciones
+    %li
+      %a{"data-toggle" => "tab", href: "#notas-files"}
+        Archivos
+        %span.badge= @nota.nota_attachments.count
+
+  .tab-content
+    .tab-pane.active#notas-form
+      = render 'notas/bt/form'
+    .tab-pane#notas-parent
+      = render 'notas/bt/association'
+    .tab-pane#notas-files
+      = render 'notas/bt/file_upload'

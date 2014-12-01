@@ -1,0 +1,20 @@
+<% #Llamado cuando se crea un organismo con ajax
+#Simplemente informar el resultado del metodo create
+%>
+<% if @organismo.valid? %>
+
+  $("#message-remote").html('<p class="alert">El organismo se guardo correctamente</p>');
+  $("#listado-organismos").append("<%= escape_javascript(render("single_row_index"))%>");
+<%
+   else
+       strerror="<h3>"+pluralize(@organismo.errors.count, "Error")+ " produjo que el organismo no se guardara:</h3>"
+
+       @organismo.errors.each_with_index do |msg, i|
+          strerror +='<p class="error">'+ msg[1] +'</p>'
+       end
+
+%>
+
+$("#message-remote").html('<%= raw(strerror) %>');
+
+<% end %>

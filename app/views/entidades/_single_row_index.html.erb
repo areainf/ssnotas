@@ -1,0 +1,26 @@
+<%
+if @cssclass.nil?
+  @cssclass= 'list-line-odd'
+end
+%>
+  <div id="entidad_<%= @entidad.id %>" class="row <%= @cssclass unless @cssclass.nil? %>">
+    <div class="datagrid-cell">
+      <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"><%= @entidad.persona.fullname unless @entidad.persona.nil?%></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><%= @entidad.dependencia.nombre unless @entidad.dependencia.nil?%></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><%= @entidad.cargo.nombre  unless  @entidad.cargo.nil? %></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"><%= check_box_tag :es_facultad, 1, @entidad.es_facultad, :onchange =>"changeEsFacultad(#{@entidad.id});" %></div>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"><%= check_box_tag :es_actual, 1, @entidad.es_actual, :onchange =>"changeEsActual(#{@entidad.id});" %></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align: right;">
+        <div class="btn-group col-button">
+           <%= link_to image_tag("view16x16.png",{:align => "middle",  :alt=>"Ver", :border => "0"}), @entidad ,{:title =>"Ver más información", :class=>"boton-row"}%>
+           <% if ! mobile_device? %>
+              <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), "#",{:title =>"Editar", :class=>"boton-row", :onClick=>"return editEntidad('#{edit_entidad_path(@entidad,:remote=>true)}');"}%>
+              <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), delete_entidad_path(@entidad), {data: { confirm: 'Eliminara la Relacion. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row",:remote=>true }%>
+           <% else %>
+                 <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), edit_entidad_path(@entidad),{:title =>"Editar", :class=>"boton-row"}%>
+                 <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), @entidad, {method: :delete, data: { confirm: 'Eliminara la Relacion. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row"}%>
+           <% end %>
+         </div>
+      </div>
+    </div>
+  </div>

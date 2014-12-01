@@ -1,0 +1,76 @@
+<%= render 'js_asociar.js' %>
+<div id="div_asociacion">
+<% if flash[:notice_side] %>
+    <p class="notice"><%= flash[:notice_side] %></p>
+<% end %>
+
+<% if !@nota.parent_id.nil? %>
+<h1 class="title">Asociada con el siguiente Documento</h1>
+<div class="box-key-values">
+    <p>
+      <span class="text-key">Descripción:</span>
+      <%= @nota.parent.tema %>
+    </p>
+    <p>
+      <span class="text-key">Codigo:</span>
+      <%= @nota.parent.codigo %>
+    </p>
+
+    <p>
+      <span class="text-key">Observaciones:</span>
+      <%= @nota.parent.descripcion %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha ingreso:</span>
+      <%= l @nota.parent.fecha_ingreso %>
+    </p>
+
+
+    <p>
+      <span class="text-key">Tipo de Documento:</span>
+      <%= @nota.parent.tipo_nota.nombre %>
+    </p>
+
+    <p>
+      <span class="text-key">Remitente:</span>
+      <%= @nota.parent.remitente.alias_or_fullname %>
+    </p>
+
+    <p>
+      <span class="text-key">Destinatario:</span>
+      <%= @nota.parent.destinatario.alias_or_fullname %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha del Documento:</span>
+      <%= l @nota.parent.fecha_nota %>
+    </p>
+
+
+    <p>
+      <%= button_to 'Eliminar asociación', asociar_notas_path(:id => @nota.id),data: { confirm: 'Eliminara la Asociación. ¿Esta seguro?' },:remote => true %>
+   </p>
+</div>
+<% else %>
+    <div class="form-v3">
+    <h1 class="title">Asociar con el siguiente Documento</h1>
+
+    <%= form_tag url_for(:controller=>"notas",:action=>"asociar"), remote: true do  %>
+        <div class="field">
+            <p>
+                <label for="parent_codigo">Código</label>
+                <%= hidden_field_tag "id", @nota.id%>
+                <input type="text" name="parent_codigo" id="parent_codigo" size="40" class="field"/>
+            </p>
+        </div>
+        <div class="actions">
+            <center>
+                <%= button_to 'Asociar', asociar_notas_path, :remote => true, :class=>"button-v2" %>
+            </center>
+        </div>
+    <% end %>
+    </div>
+<% end%>
+
+</div>

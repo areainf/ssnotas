@@ -1,0 +1,40 @@
+/*EL PARAMETRO $listado lo defino cuando la accion que lo llama es crear desde el listado de dependencias
+ porque en este caso tiene que actualiar el listado, este metodo tambien se invoca desde crear entidad
+ ahi podes llamar a crear dependencia, y en este caso solo tiene que definir un metodo javascript
+ llamado postCreateDependencia y se le pasa el json del objeto creado*/
+<%
+  if @listado
+%>
+      <% if @dependencia.valid? %>
+
+        $("#message-remote").html('<p class="alert">La Dependencia se guardo correctamente</p>');
+        $("#listado-cargos").append("<%= escape_javascript(render("single_row_index"))%>");
+      <%
+         else
+             strerror="<h3>"+pluralize(@dependencia.errors.count, "Error")+ " produjo que la Dependencia no se guardara:</h3>"
+
+             @cargo.errors.each_with_index do |msg, i|
+                strerror +='<p class="error">'+ msg[1] +'</p>'
+             end
+
+      %>
+
+             $("#message-remote").html('<%= raw(strerror) %>');
+
+      <% end %>
+<% else %>
+    <%- if @dependencia.errors.any? %>
+        var errores="";
+        <% @dependencia.errors.each_with_index do |msg, i| %>
+              errores += "<%= msg[1] %>\n";
+        <% end %>
+        alert(errores);
+
+    <%- else %>
+      postCreateDependencia('<%= @dependencia.to_json(:methods => [:fullname, :alias_or_fullname]).html_safe %>');
+    <%- end %>
+<% end %>
+
+
+
+

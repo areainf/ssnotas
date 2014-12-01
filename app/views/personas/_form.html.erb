@@ -1,0 +1,30 @@
+  <% if @persona.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@persona.errors.count, "error") %> produjo que la persona no fuera guardada:</h2>
+
+      <ul>
+      <% @persona.errors.each_with_index do |msg, i| %>
+          <li><%= msg[1] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div id="message-remote"></div>
+<%= form_for @persona,:html=>{ :class=>"form", :role=>"form",  :remote =>  params[:remote] } do |f| %>
+
+  <div class="form-group">
+    <%= f.label :nombre, :class=>"required" %><br>
+    <%= f.text_field :nombre, :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :apellido %><br>
+    <%= f.text_field :apellido, :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email %><br>
+    <%= f.text_field :email, :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <center><%= f.submit "Aceptar", :class => 'btn  btn-primary' %></center>
+  </div>
+<% end %>

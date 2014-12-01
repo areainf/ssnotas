@@ -1,0 +1,40 @@
+
+<%
+  if @persona.entidades.empty?
+%>
+<h1>Cargos asociados a la persona</h1>
+<p><strong>La persona no tiene cargos asociados</strong></p>
+<%
+  else
+
+%>
+<div class="row datagrid-caption">
+ <h2>Cargos asociados a la persona</h2>
+</div>
+<div class="row  datagrid-th">
+  <div class="col-sm-4 col-md-4 col-xs-4 col-lg-4">Dependencia</div>
+  <div class="col-sm-3 col-md-3 col-xs-3 col-lg-3">Cargo</div>
+  <div class="col-sm-2 col-md-2 col-xs-2 col-lg-2">Facultad</div>
+  <div class="col-sm-2 col-md-2 col-xs-2 col-lg-2">Actual</div>
+</div>
+<%
+      @persona.entidades.each do |entidad|
+%>
+<div id="entidad_<%= entidad.id%>" class="row <%= cycle('list-line-odd', 'list-line-even') %>">
+  <div class="col-sm-4 col-md-4 col-xs-4 col-lg-4"><%= entidad.dependencia.fullname unless entidad.dependencia.nil? %></div>
+  <div class="col-sm-3 col-md-3 col-xs-3 col-lg-3"><%= entidad.cargo.nombre unless entidad.cargo.nil?%></div>
+  <div class="col-sm-2 col-md-2 col-xs-2 col-lg-2"><%= check_box_tag :es_facultad, 1, entidad.es_facultad, :onchange =>"changeEsFacultad(#{entidad.id});" %></div>
+  <div class="col-sm-2 col-md-2 col-xs-2 col-lg-2"><%= check_box_tag :es_actual, 1, entidad.es_actual, :onchange =>"changeEsActual(#{entidad.id});" %></div>
+  <div class="col-sm-1 col-md-1 col-xs-1 col-lg-1" style="text-align: right;">
+    <div class="btn-group col-button">
+      <%= link_to_function image_tag("delete16x16.png",{:align => "middle", :title =>"Eliminar", :alt=>"Eliminar", :border => "0"}), "deleteEntidad("+ entidad.id.to_s + ")", {:title=>"Eliminar", :class=>"boton-row"}%>
+    </div>
+  </div>
+</div>
+<%
+      end
+%>
+<%
+  end
+%>
+

@@ -1,0 +1,60 @@
+<style>
+select option:first-child {
+    font-weight: bold;
+    border-bottom: 2px #AA0000 solid;
+}
+
+
+</style>
+<%= render 'script_form.js' %>
+<%= form_for(@nota_temporal) do |f| %>
+  <% if @nota_temporal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@nota_temporal.errors.count, "error") %> produjo que el Documento no se guardara:</h2>
+
+      <ul>
+      <% @nota_temporal.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <div class="field">
+        <%= f.label :remitente_id, :class=>"required" %><br />
+            <%= f.select :remitente_id, @remitentes.collect {|p| [ p.alias_or_fullname, p.id ] },{ :include_blank => "No esta en el listado, Ingresare uno nuevo"},{ :class=>"field", :onChange => "return changeRemitente();"} %>
+            <div id="div-texto-remitente">
+            <%= f.text_field :texto_remitente, :class=>"field", :size =>"50", :value => (@nota_temporal.texto_remitente || ""), :title =>"Cargo: Apellido, Nombre" %><br>
+            <strong>Formato: </strong>Cargo: Apellido, Nombre
+            </div>
+  </div>
+  <div class="field">
+   <%= f.label :destinatario_id, :class=>"required" %><br />
+            <%= f.select :destinatario_id, @destinatarios.collect {|p| [ p.alias_or_fullname, p.id ] },{ :include_blank =>"No esta en el listado, Ingresare uno nuevo"},{:selected => @nota_temporal.destinatario_id, :class=>"field", :onChange => "return changeDestinatario();"} %>
+            <div id="div-texto-destinatario">
+            <%= f.text_field :texto_destinatario, :class=>"field", :size =>"50", :value => (@nota_temporal.texto_destinatario || ""), :title =>"Cargo: Apellido, Nombre" %><br>
+            <strong>Formato: </strong>Cargo: Apellido, Nombre
+            </div>
+  </div>
+
+
+        <div class="field">
+            <%= f.label :tipo_nota_id, "Tipo de Documento" , :class=>"required"%>
+            <%= f.select :tipo_nota_id, @tipos_notas.collect {|p| [ p.nombre, p.id ] },{},{ :class=>"field small"} %>
+            <span>&nbsp;&nbsp;</span>
+            <%= f.label :fecha_nota, :class=>"required" %>
+            <%= f.text_field :fecha_nota, :class=>"field small", :size =>"10", :value => (@nota_temporal.fecha_nota || Time.now).strftime('%d-%m-%Y') %>
+
+        </div>
+          <div class="field">
+            <p><%= f.label :tema, "Descripción", :class=>"required" %><br />
+            <%= f.text_field :tema, :class=>"field", :size=>"55" %></p>
+          </div>
+          <div class="field">
+            <%= f.label :descripcion, "Observaciones" %><br />
+            <%= f.text_area :descripcion, :class=>"field", :size=>"60x5" %>
+          </div>
+  <div class="actions">
+    <center><%= f.submit "Aceptar", :class=>"button-v2" %></center>
+  </div>
+<% end %>

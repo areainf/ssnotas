@@ -1,0 +1,33 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(edit_dependencia_path(@dependencia),"Editar", "edit16x16.png", {:title =>"Editar Dependencia", :alt=>"Editar"})%>
+  <%= navBarLink(dependencias_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Dependencias", :alt=>"Listar"})%>
+</nav>
+
+
+<div class="box-key-values">
+    <h1>Detalle sobre la Dependencia</h1>
+<p>
+  <span class="text-key">Nombre:</span>
+  <%= @dependencia.nombre %>
+</p>
+<p>
+  <span class="text-key">Alias:</span>
+  <%= @dependencia.alias %>
+</p>
+
+<p>
+  <span class="text-key">Descripcion:</span>
+  <%= @dependencia.descripcion %>
+</p>
+
+<p>
+  <span class="text-key">Codigo:</span>
+  <%= @dependencia.codigo %>
+</p>
+
+<p>
+  <span class="text-key">Organismo:</span>
+  <%= @dependencia.organismo.try :nombre %>
+</p>
+
+</div>

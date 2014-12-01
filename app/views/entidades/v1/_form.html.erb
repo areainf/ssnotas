@@ -1,0 +1,68 @@
+<%= render 'js_form_new.js' %>
+<%= #render 'process_unique_actual.js'
+%>
+<%= form_for(@entidad , :remote =>  params[:remote])  do |f| %>
+  <% if @entidad.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@entidad.errors.count, "error") %> produjo que la Entidad no se guardara:</h2>
+
+      <ul>
+      <% @entidad.errors.each_with_index do |msg, i| %>
+          <li><%= msg[1] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if params[:es_destinatario].blank? && params[:es_destinatario]=='true'%>
+    <%= f.hidden_field :es_destinatario, :value => "1" %>
+  <% end%>
+  <div class="field">
+      <label for="persona_fullname" class="required">Persona</label>
+        <p>
+          <%= f.hidden_field :persona_id %>
+          <span style="font-size: 12px;">Para crear uno nuevo ingrese "Apellido, Nombre", y presione el botón crear</span><br>
+          <input type="text" name="persona_fullname" id="persona_fullname" size="40" class="field"/>
+          <%= link_to_function image_tag("add-01.png",{:alt=>"Nueva", :title=>"Crear Persona"}), "crearPersona('persona_fullname')" %><br />
+          <span id="text_persona_id" class="text-selected-obj"></span><br>
+        </p>
+  </div>
+  <div class="field">
+      <label for="dependencia_fullname" class="required">Dependencia</label>
+        <p>
+            <%= f.hidden_field :dependencia_id %>
+            <input type="text" name="dependencia_fullname" id="dependencia_fullname" size="40" class="field"/>
+            <%= link_to_function image_tag("addModal.jpg",{:alt=>"Nueva", :title=>"Crear Dependencia"}), "openNuevaDependencia()" %><br />
+            <span id="text_dependencia_id" class="text-selected-obj"></span>
+        </p>
+  </div>
+  <div class="field">
+    <label for="cargo_fullname" class="required">Cargo</label>
+    <p>
+            <%= f.hidden_field :cargo_id %>
+            <input type="text" name="cargo_fullname" id="cargo_fullname" size="40" class="field"/>
+            <%= link_to_function image_tag("add-01.png",{:alt=>"Nuevo", :title=>"Crear Cargo"}), "crearCargo('cargo_fullname')" %><br />
+            <span id="text_cargo_id" class="text-selected-obj"></span>
+        </p>
+        <p><%= f.label :es_facultad,  "Es miembro de la facultad" %>
+            <%= f.select :es_facultad, [["Si", true], ["No", false]], { :include_blank => false, :selected => @entidad.es_facultad }  %></p>
+  </div>
+  <% if params[:action]=="new" %>
+  <br>
+  <div class="field">
+        <p>
+        <%= f.label :es_actual,  "La persona ingresada ocupa actualmente el cargo en la dependencia indicada?", :class=>"small" %>
+        <%= f.check_box :es_actual, {:onchange => 'showhide_replace_all_es_actual();'} %>
+        </p>
+        <br>
+        <div id="divreplace_all_es_actual">
+            <%= label_tag "replace_all_es_actual",  "Poner a las demas personas con este cargo en esta dependencia como no actuales?", :class=>"small" %>
+            <%= check_box_tag "replace_all_es_actual" %>
+        </div>
+  </div>
+  <% end %>
+
+  <div class="actions">
+  <center><%= f.submit "Aceptar", :class => 'button-v2' %></center>
+  </div>
+<% end %>
+

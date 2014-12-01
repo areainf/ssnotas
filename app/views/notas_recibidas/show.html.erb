@@ -1,0 +1,78 @@
+<div class="box-key-values">
+    <div class="box-toolbar">
+        <ul>
+        <li><%= link_to image_tag("list16x16.png",{:align => "middle", :title =>"Ir al Listado", :alt=>"Listar", :border => "0"})+"Listado", notas_recibidas_path %></li>
+        </ul>
+    </div>
+    <h1>Detalle sobre el Documento</h1>
+    <p>
+      <span class="text-key">Descripción:</span>
+     <%= @nota_recibida.tema %>
+    </p>
+
+<p>
+  <span class="text-key">Observaciones:</span>
+  <%= @nota_recibida.descripcion %>
+</p>
+
+<p>
+  <span class="text-key">Fecha ingreso:</span>
+  <%= l @nota_recibida.fecha_ingreso %>
+</p>
+
+<p>
+  <span class="text-key">Codigo:</span>
+  <%= @nota_recibida.codigo %>
+</p>
+
+<p>
+  <span class="text-key">Tipo de Documento:</span>
+  <%= @nota_recibida.tipo_nota.nombre %>[<%= @nota_recibida.tipo_nota_id %>]
+</p>
+
+<p>
+  <span class="text-key">Remitente:</span>
+  <%= @nota_recibida.remitente.fullname %>[<%= @nota_recibida.remitente_id %>]
+</p>
+
+<p>
+  <span class="text-key">Destinatario:</span>
+  <%= @nota_recibida.destinatario.fullname %>[<%= @nota_recibida.destinatario_id %>]
+</p>
+
+
+<p>
+  <span class="text-key">Fecha del Documento:</span>
+  <%= @nota_recibida.fecha_nota %>
+</p>
+
+<p>
+  <span class="text-key">Fecha de carga:</span>
+  <%= @nota_recibida.fecha_carga %>
+</p>
+
+<p>
+  <span class="text-key">Fecha de ingreso:</span>
+  <%= @nota_recibida.fecha_ingreso %>
+</p>
+
+<p>
+  <span class="text-key">Tipo:</span>
+  <%= str_attr_tipo @nota_recibida.tipo %>
+</p>
+
+<p>
+  <span class="text-key">Estado:</span>
+  <%= str_attr_estado @nota_recibida.estado %>
+</p>
+
+<p>
+  <span class="text-key">Cargado por:</span>
+  <%= @nota_recibida.cargado_por.username %>
+</p>
+
+<p>
+  <span class="text-key">Recibido por:</span>
+  <%= @nota_recibida.recibido_por.username %>
+</p>
+</div>

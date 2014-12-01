@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nota:</strong>
+  <%= @nota_attachment.nota_id %>
+</p>
+
+<p>
+  <strong>Filescan:</strong>
+  <%= @nota_attachment.filescan %>
+</p>
+
+<%= link_to 'Edit', edit_nota_attachment_path(@nota_attachment) %> |
+<%= link_to 'Back', notas_attachment_path %>

@@ -1,0 +1,33 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(edit_entidad_path(@entidad),"Editar", "edit16x16.png", {:title =>"Editar Entidad", :alt=>"Editar"})%>
+  <%= navBarLink(entidades_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Entidades", :alt=>"Listar"})%>
+</nav>
+
+
+<div class="box-key-values">
+<h1>Detalle sobre la Relación entre el Cargo y la Persona</h1>
+<p>
+  <span class="text-key">Persona:</span>
+  <%= @entidad.persona.fullname unless  @entidad.persona.nil? %>
+</p>
+
+<p>
+  <span class="text-key">Dependencia:</span>
+  <%= @entidad.dependencia.nombre unless  @entidad.dependencia.nil? %>
+</p>
+
+<p>
+  <span class="text-key">Cargo:</span>
+  <%= @entidad.cargo.nombre unless @entidad.cargo.nil? %>
+</p>
+
+<p>
+  <span class="text-key">Es facultad:</span>
+  <%= @entidad.es_facultad %>
+</p>
+
+<p>
+  <span class="text-key">User:</span>
+  <%= @entidad.user %>
+</p>
+</div>

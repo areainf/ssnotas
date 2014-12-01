@@ -1,0 +1,19 @@
+#show_fields_nota
+  %p
+    %span.text-key Descripción:
+    = nota.tema 
+  %p
+    %span.text-key Codigo:
+    = nota.codigo 
+  %p
+    %span.text-key Tipo de Documento:
+    = nota.tipo_nota.nombre
+  %p
+    %span.text-key Remitente:
+    = nota.remitente.fullname
+  %p
+    %span.text-key Destinatario:
+    = nota.destinatario.fullname
+  %p
+    %span.text-key Fecha del Documento:
+    = l nota.fecha_nota

@@ -1,0 +1,18 @@
+<%= render 'js_edit.js' %>
+<nav class="navbar" role="navigation">
+  <%= navBarLink(@persona,"Mostrar", "view16x16.png", {:title =>"Mostrar Persona", :alt=>"Mostrar"})%>
+  <%= navBarLink("#","Nuevo Cargo", "list16x16.png", {:title =>"Asociarle Nuevo Cargo", :alt=>"Asociar",:id => "link_open_nueva_entidad" })%>
+  <%= navBarLink(personas_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Personas", :alt=>"Listar"})%>
+</nav>
+
+<div class="formulario">
+    <div class="row">
+      <div class="col-xs-6  col-sm-6  col-md-6  col-lg-6 col-md-offset-3 col-sm-offset-3 col-lg-offset-3">
+        <h1>Editar Persona</h1>
+        <%= render 'form' %>
+      </div>
+    </div>
+</div><br>
+<div id="cargos_asociados_persona">
+<%= render 'list_cargos_asociados' %>
+</div>

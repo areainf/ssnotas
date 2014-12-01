@@ -1,0 +1,16 @@
+<div class="box-key-values">
+    <h1>Cupón para presentar en Mesa de Entrada de la Facultad</h1>
+    <p>
+      <span class="text-key">Mejor descargue e imprima el cupon en formato pdf desde</span>
+      <%= link_to "aqui", cupon_nota_temporal_path(@nota_temporal, :format => :pdf) , :target =>:new %>
+    </p>
+<p><span class="text-key">Fecha de carga:</span> <%= l @nota_temporal.fecha_carga %></p>
+<hr>
+<h1 align="left">Facultad de Ciencias Exáctas Físico Químicas y Naturales</h1>
+
+<p>Presente este cupón en mesa de entrada de la Facultad, a fin de darle entrada al Documento con codigo</p>
+<p>
+  <%= image_tag(@barcode)%><br>
+  <%= @nota_temporal.codigo %>
+</p>
+</div>

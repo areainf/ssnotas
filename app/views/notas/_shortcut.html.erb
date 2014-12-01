@@ -1,0 +1,106 @@
+<div class="box-key-values">
+    <p>
+      <span class="text-key">Codigo:</span><span style="padding-right: 30px;">
+      <%= @nota.codigo %></span>
+    </p>
+    <p>
+      <span class="text-key">Descripción:</span>
+      <%= @nota.tema %>
+    </p>
+
+    <p>
+      <span class="text-key">Observaciones:</span>
+      <%= @nota.descripcion %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha ingreso:</span>
+      <%= l @nota.fecha_ingreso %>
+    </p>
+
+
+    <p>
+      <span class="text-key">Tipo de Documento:</span>
+      <%= @nota.tipo_nota.nombre %>
+    </p>
+
+    <p>
+      <span class="text-key">Remitente:</span>
+      <%= @nota.remitente.fullname %>
+    </p>
+
+    <p>
+      <span class="text-key">Destinatario:</span>
+      <%= @nota.destinatario.fullname %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha de la nota:</span>
+      <%= l @nota.fecha_nota %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha de carga:</span>
+      <%= l @nota.fecha_carga %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha de ingreso:</span>
+      <%= l @nota.fecha_ingreso %>
+    </p>
+
+    <p>
+      <span class="text-key">Tipo:</span>
+      <%= str_attr_tipo @nota.tipo %>
+    </p>
+
+    <p>
+      <span class="text-key">Estado:</span>
+      <%= str_attr_estado @nota.estado %>
+    </p>
+
+    <p>
+      <span class="text-key">Cargado por:</span>
+      <%= @nota.cargado_por.username %>
+    </p>
+
+    <p>
+      <span class="text-key">Recibido por:</span>
+      <%= @nota.recibido_por.username %>
+    </p>
+</div>
+
+<% if ! @nota.notas_asociadas.empty? %>
+<br><hr><br>
+<div class="datagrid">
+<table id="table-notas" >
+  <caption>Documentos asociados</caption>
+  <thead>
+  <tr id="header-notas">
+    <th>ID</th>
+    <th>Descripción</th>
+    <th>Observaciones</th>
+    <th>Fecha Nota</th>
+    <th>Fecha ingreso</th>
+    <th>Tipo nota</th>
+    <th>Remitente</th>
+    <th>Destinatario" %></th>
+  </tr>
+  </thead>
+  <tbody>
+<% @nota.notas_asociadas.each do |nota| %>
+    <tr id="<%= "nota_#{nota.id}" %>" class="grilla-row <%= cycle('list-line-odd', 'list-line-even') %>">
+    <td><%= nota.id %></td>
+    <td><%= truncate(nota.tema, lenght: 200) %></td>
+    <td><%= truncate(nota.descripcion, lenght: 200) %></td>
+    <td><%= l nota.fecha_nota unless nota.fecha_nota.nil? %></td>
+    <td><%= l nota.fecha_ingreso unless nota.fecha_ingreso.nil? %></td>
+    <td><%= nota.tipo_nota.nombre unless nota.tipo_nota.nil?%></td>
+    <td><%= nota.remitente.alias_or_fullname unless nota.remitente.nil? %></td>
+    <td><%= nota.destinatario.alias_or_fullname unless nota.destinatario.nil? %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+</div>
+<% end%>

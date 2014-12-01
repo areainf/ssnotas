@@ -1,0 +1,40 @@
+
+  <% if @dependencia.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dependencia.errors.count, "error") %> produjo que la dependencia no se guardara:</h2>
+      <ul>
+        <% @dependencia.errors.each_with_index do |msg, i| %>
+  		  <li><%= msg[1] %></li>
+		<% end %>
+	  </ul>
+    </div>
+  <% end %>
+  <div id="message-remote"></div>
+<%= form_for(@dependencia , :remote =>  params[:remote]) do |f| %>
+ <% if params.has_key?("listado")%>
+ <input type="hidden" name="listado" value="1" />
+ <% end%>
+  <div class="form-group">
+    <%= f.label :nombre, :class=>"required" %><br />
+    <%= f.text_field :nombre, :class=>"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :alias %><br />
+    <%= f.text_field :alias, :class=>"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion, :class=>"form-control" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :organismo_id %><br />
+    <%= f.select :organismo_id, @organismo.collect {|p| [ p.nombre, p.id ] },{:include_blank =>"Ninguna Organización"},{ :class=>"form-control"} %>
+  </div>
+  <div class="form-group">
+    <%= f.label :codigo %><br />
+    <%= f.number_field :codigo, :class=>"form-control" %>
+  </div>
+  <div class="form-group">
+    <center><%= f.submit "Aceptar", :class => 'btn  btn-primary' %></center>
+  </div>
+<% end %>

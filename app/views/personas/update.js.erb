@@ -1,0 +1,15 @@
+<% #Llamado cuando se crea un persona con ajax
+#Simplemente informar el resultado del metodo create
+%>
+<% if @persona.valid? %>
+ $('#persona_<%= @persona.id %>').replaceWith("<%= escape_javascript(render("single_row_index"))%>");
+$("#modal-persona").dialog( "close" );
+<%
+   else
+       strerror="<h3>"+pluralize(@persona.errors.count, "Error")+ " produjo que la persona no se guardara:</h3>"
+       @persona.errors.each_with_index do |msg, i|
+          strerror +='<p class="error">'+ msg[1] +'</p>'
+       end
+%>
+$("#message-remote").html('<%= raw(strerror) %>');
+<% end %>

@@ -1,0 +1,84 @@
+#form-notas
+  = form_for(@nota, {:html => {:role => "form"}}) do |f|
+    - if @nota.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@nota.errors.count, "error") 
+          produjo que el Documento no se guardara:
+        %ul
+          - @nota.errors.each_with_index do |msg, i| 
+            %li= msg[1]
+    - if @parent.present?
+      .row
+        .col-md-12
+          .panel.panel-primary
+            .panel-heading
+              %h3.panel-title Asociar la entrada al siguiente Documento</h2>
+            .panel-body
+              = render "/notas/bt/show_fields", nota: @parent
+      = hidden_field_tag "nota[parent_id]", @parent.id
+      = hidden_field_tag "parent_id", @parent.id 
+
+    .row
+      .col-md-4
+        .form-group.required
+          %label.label-bstp-horizontal.control-label{:for => "tipo"}= 'Tipo'
+          = f.select :tipo, hashTipo.map{|role| [ role[1], role[0] ]}, {}, {:class => "form-control"}
+      .col-md-4
+        .form-group
+          %label.control-label.label-bstp-horizontal{:for => "nro_referencia"}= 'Numero de Referencia'
+          = f.text_field :nro_referencia, {:class => "form-control"}
+      .col-md-4
+        .form-group
+          %label.control-label.label-bstp-horizontal{:for =>"estado_nota"}= 'Estado'
+          = f.select(:estado_nota_id, EstadoNota.all.collect {|p| [ p.nombre, p.id ] }, {:include_blank => ''}, {:class => "form-control"}) 
+    .row
+      .col-md-6
+        .form-group.required
+          %label.label-bstp-horizontal.control-label{:for => "tipo_nota_id"}= 'Tipo de Documento'
+          = f.select :tipo_nota_id, @tipos_notas.collect {|p| [ p.nombre, p.id ] },{},{ :class=>"form-control"}
+      .col-md-6
+        .form-group.required
+          %label.label-bstp-horizontal.control-label{:for => "fecha_nota"}= 'Fecha'
+          = f.text_field :fecha_nota, :class=>"form-control", :value => (@nota.fecha_nota || Time.now).strftime('%d-%m-%Y')
+    .form-group.required
+      %label.label-bstp-horizontal.control-label{:for => "remitente_token"}= 'Remitente'
+      .input-group
+        - if @nota.remitente.nil?
+          = text_field_tag :remitente_token,'', {:class => "form-control"}
+        - else
+          - json = @nota.remitente.as_json(:methods => :alias_or_fullname, :only => [:id])
+          = text_field_tag :remitente_token,'', {:class => "form-control", data: {pre: [json] }}
+        %span.input-group-addon
+          = link_to (image_tag("add-02.png",{:alt=>"Nuevo Remitente", :title=>"Abrir ventana Nuevo Remitente", :border => "0"})), "#", :id => "link_open_nuevo_remitente"
+        = f.hidden_field :remitente_id
+    .form-group.required
+      %label.label-bstp-horizontal.control-label{:for => "destinatarios_token"}= 'Destinatarios'
+      .input-group
+        
+        - if @nota.destinatario.nil?
+          = text_field_tag :destinatarios_token,'', {:class => "form-control"}
+        - else
+          - json =  @nota.destinatario.as_json(:methods => :alias_or_fullname, :only => [:id]) 
+          = text_field_tag :destinatarios_token,'', {:class => "form-control", data: {pre: [json]}}
+
+        %span.input-group-addon
+          = link_to (image_tag("add-02.png",{:alt=>"Nuevo Destinatario", :title=>"Abrir ventana Nuevo Destinatario", :border => "0"})), "#", :id => "link_open_nuevo_destinatario"
+      / = hidden_field_tag :destinatarios_id
+    .form-group
+      %label.control-label.label-bstp-horizontal{:for => "persona_ref_tokens"}= 'Personas de Referencia'
+      - if @nota.personas.nil?
+        = text_field_tag :persona_ref_tokens,'', {:class => "form-control"}
+      - else
+        = text_field_tag :persona_ref_tokens,'', {:class => "form-control", data: {pre: @nota.personas.map(&:attributes)}}
+
+      = hidden_field_tag :personas_ref_id
+    .form-group.required
+      %label.label-bstp-horizontal.control-label{:for => "tema"}= 'Descripcion'
+      = f.text_field :tema, {:class => "form-control"}
+    .form-group.required
+      %label.label-bstp-horizontal.control-label{:for => "descripcion"}= 'Observaciones'
+      = f.text_area :descripcion, {:class => "form-control", :size => "80x7"}
+    .form-group
+      %center
+        = f.submit "Aceptar", {:html => {:class => "btn btn-primary"}}

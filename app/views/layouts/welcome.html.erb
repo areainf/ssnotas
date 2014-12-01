@@ -1,0 +1,50 @@
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mesa de Entrada - FCEFQyN </title>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  <%= stylesheet_link_tag    "welcome", :media => "all" %>
+
+
+  <%= csrf_meta_tags %>
+</head>
+<body >
+    <div class="navbar" role="navigation">
+
+        <div class="collapse navbar-collapse">
+            <%= render :partial => "devise/shared/links" %>
+        </div><!--/.nav-collapse -->
+
+    </div>
+
+<div class="container">
+<div class="row">
+   <div class="col-xs-8 col-sm-4 col-md-4  col-lg-4 col-md-offset-1 col-md-pull-1">
+     <div id="containera">
+       <%= yield %>
+     </div>
+   </div>
+
+   <div class="col-xs-4 col-sm-6 col-md-6  col-lg-6">
+     <% if flash[:alert] || flash[:notice] || flash[:error] %>
+       <div class="main-message-error">
+          <% if flash[:alert] %>
+            <p class="alert"><%= flash[:alert] %></p>
+          <% end %>
+          <% if flash[:notice] %>
+            <p class="notice"><%= flash[:notice] %></p>
+          <% end %>
+          <% if flash[:error] %>
+            <p class="error"><%= flash[:error] %></p>
+          <% end %>
+        </div>
+     <% end %>
+   </div>
+</div>
+  </div>
+</body>
+</html>

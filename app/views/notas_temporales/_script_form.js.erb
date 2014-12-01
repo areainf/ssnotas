@@ -1,0 +1,49 @@
+<script>
+/*SE EJECUTA CUANDO SE TERMINA DE CARGAR LA PAGINA*/
+$(document).ready(function(){
+    <% if @nota_temporal.id.nil? %>
+    /*Seleccionamos el primer remitente, para que no aparezca "No esta el Remitente, Ingrese uno nuevo"*/
+    if($("#nota_temporal_remitente_id option").length > 1)
+        $("#nota_temporal_remitente_id").prop('selectedIndex', 1);
+     /*Seleccionamos el primer destinatario, para que no aparezca "No esta el Destinatario, Ingrese uno nuevo"*/
+    if($("#nota_temporal_destinatario_id option").length > 1)
+        $("#nota_temporal_destinatario_id").prop('selectedIndex', 1);
+
+
+    <% end %>
+     changeRemitente();
+     changeDestinatario();
+
+
+
+
+
+     $("#nota_temporal_fecha_nota" ).datepicker();
+});
+
+
+
+    /*Se ejecuta al cambiar de remitente.
+      Se encargara de mostrar u ocultar div-texto-remitente*/
+   function changeRemitente(){
+        selid= $("#nota_temporal_remitente_id").val();
+        if(selid==""){
+            $("#div-texto-remitente").show();
+            $("#nota_temporal_texto_remitente").focus();
+        }
+        else
+            $("#div-texto-remitente").hide();
+   }
+
+   /*Se ejecuta al cambiar de destinatario.
+      Se encargara de mostrar u ocultar div-texto-destinatario*/
+   function changeDestinatario(){
+        selid= $("#nota_temporal_destinatario_id").val();
+        if(selid==""){
+            $("#div-texto-destinatario").show();
+            $("#nota_temporal_texto_destinatario").focus();
+        }
+        else
+            $("#div-texto-destinatario").hide();
+   }
+</script>

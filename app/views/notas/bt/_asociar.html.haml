@@ -1,0 +1,17 @@
+#nota-asociar
+  = form_tag url_for(:controller=>"notas",:action=>"asociar"), remote: true do
+    = hidden_field_tag "id", @nota.id
+    - if @nota.parent_id.nil?
+      %h1.title Asociar con el siguiente Documento
+      .form-group
+        %label{for: "parent_codigo"}
+          Código
+        %input{type: "text", name: "parent_codigo", id: "parent_codigo"}
+      .form-group
+        %center
+          = button_to 'Asociar', asociar_notas_path, :remote => true, :class => "btn btn-primary"
+    - else
+      %input{type: "hidden", name: "parent_codigo", id: "parent_codigo", value: ""}
+      .form-group
+        %center
+          = button_to 'Eliminar la Asocición', asociar_notas_path, :remote => true, :class => "btn btn-primary"

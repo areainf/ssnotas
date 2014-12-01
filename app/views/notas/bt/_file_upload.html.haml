@@ -1,0 +1,37 @@
+#nota-attachment
+  - if !@nota.nota_attachments.empty?
+    .panel.panel-primary
+      .panel-heading Listado de archivos
+      .panel-body
+        - @nota.nota_attachments.each do |p|  
+          .row{id: "nota_attachment_#{p.id}"}
+            .col-md-11= link_to File.basename(p.filescan.url), p 
+            .col-md-1
+              = link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), "#", { :title =>"Eliminar", :class => "boton-row", :onClick => "if (confirm('Esta seguro de eliminar el archivo adjunto?'))deleteArchivoAdjunto(#{p.id}); return false;"}
+  %br            
+  %br            
+  %br            
+  %br            
+  %br
+  .clearfix            
+  = form_for(@nota, {:html => {:role => "form", :class => "form-horizontal"}}) do |f|
+    .row
+      .col-md-4
+        = f.file_field :filescan
+      .col-md-2 
+        = f.submit "Aceptar", {:html => {:class => "btn btn-primary"}}
+  .clearfix
+    / .control-group.file.optional
+    /   %label.file.optional.control-label{for: "nota_attachments"} Avatar
+    /   .controls
+    /     .fileupload.fileupload-new{"data-provides" => "fileupload"}
+    /       / .fileupload-new.thumbnail{style: "width: 50px; height: 50px;"}= image_tag @user.avatar.small.url
+    /       .fileupload-preview.fileupload-exists.thumbnail{style: "width: 50px; height: 50px;"}
+    /       %span.btn.btn-file.btn-primary
+    /         %span.fileupload-new Seleccionar Archivo
+    /         %span.fileupload-exists Cambiar
+    /         = f.fields_for :nota_attachments do |p|
+    /           %label{for: "filescan"}
+    /           .controls
+    /             = p.file_field :filescan, :multiple => true, name: "nota_attachments[filescan][]" 
+    /           = link_to "Remove", "#", class: "btn fileupload-exists", "data-dismiss" => "fileupload"

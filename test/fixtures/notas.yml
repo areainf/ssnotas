@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tema: MyString
+  descripcion: MyText
+  fecha_ingreso: 2013-06-10
+  codigo: MyString
+  tipo_nota_id: 1
+  remitente_id: 1
+  destinatario_id: 1
+  fecha_eliminada: 2013-06-10
+  fecha_finalizada: 2013-06-10
+
+two:
+  tema: MyString
+  descripcion: MyText
+  fecha_ingreso: 2013-06-10
+  codigo: MyString
+  tipo_nota_id: 1
+  remitente_id: 1
+  destinatario_id: 1
+  fecha_eliminada: 2013-06-10
+  fecha_finalizada: 2013-06-10

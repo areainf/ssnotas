@@ -1,0 +1,17 @@
+<% #Llamado cuando se crea un dependencia con ajax
+#Simplemente informar el resultado del metodo create
+%>
+
+<% if @dependencia.valid? %>
+
+ $('#dependencia_<%= @dependencia.id %>').replaceWith("<%= escape_javascript(render("single_row_index"))%>");
+$("#modal-dependencia").dialog( "close" );
+<%
+   else
+       strerror="<h3>"+pluralize(@dependencia.errors.count, "Error")+ " produjo que la dependencia no se guardara:</h3>"
+       @dependencia.errors.each_with_index do |msg, i|
+          strerror +='<p class="error">'+ msg[1] +'</p>'
+       end
+%>
+$("#message-remote").html('<%= raw(strerror) %>');
+<% end %>

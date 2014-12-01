@@ -1,0 +1,25 @@
+  <% if @estado_nota.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@estado_nota.errors.count, "error") %> produjo que el Estado no se guardara:</h2>
+      <ul>
+      <% @estado_nota.errors.each_with_index do |msg, i| %>
+        <li><%= msg[1] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div id="message-remote"></div>
+<%= form_for(@estado_nota , :remote =>  params[:remote]) do |f| %>
+  <div class="form-group">
+    <%= f.label :nombre, :class=>"required" %><br />
+    <%= f.text_field :nombre , :class => 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion, :class => 'form-control' %>
+  </div>
+ <div class="form-group">
+    <center><%= f.submit "Aceptar", :class => 'btn  btn-primary' %></center>
+  </div>
+<% end %>

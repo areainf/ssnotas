@@ -1,0 +1,24 @@
+<script language="JavaScript">
+   $(function() {
+        /*----------------------------------------*/
+    $('#parent_codigo').autocomplete({
+        minLength: 4,
+        source: '<%=  notas_path(:json) %>',
+        focus: function(event, ui) {
+            $('#parent_codigo').val(ui.item.codigo);
+                return false;
+        },
+        select: function(event, ui) {
+                $('#parent_codigo').val(ui.item.codigo);
+                return false;
+        }
+    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+        .append( "<a> [" + item.codigo +"]" + item.tema+" "+"</a>" )
+        .appendTo( ul );
+    };
+
+   });
+
+
+</script>

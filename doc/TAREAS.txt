@@ -1,0 +1,80 @@
+###############################
+#####  TAREAS PENDIENTES  #####
+###############################
+
+--> Busqueda de entidades no funciona cuando la dependencia es NULL
+--> Cuando vas a procesar nota no se abre el campo para dar de alta a un destinatario no existente
+
+--> Falta hacer seguimiento de notas
+--> Permitir poner a un usuario como no activo, y agregar en el login la condicion de activo
+--> Acomodar estilos
+--> Al ordenar notas temporales incluir el parametro de busqueda para poder ordenar solo la busqueda
+
+--> Dar la posibilidad de agregar multiples destinatarios en nota temporal
+
+--> Nueva nota, en los autocomplete que aparezcan agrupados por dependencias
+--> Agregar un campo tinytext a nota que funcione como log de fecha y usuario que subio la nota, fecha y usuarios que la han ido editando, etc
+
+--> Hay que hacer bien la validacion de password de usuario
+
+
+
+#REALIZADOOOOO
+
+#--> Asociar usuario a dependencia
+#--> Agregar nombre corto a dependencias y organismos
+#--> Cambiar fullname por alias_or_fullname en todos los autocompletes, en notas, entidades, etc
+#--> Mesa de Entrada solo puede editar usuarios que no sean administradores.
+#--> Hacer abm de notas cargadas por secretarias de departamentos.
+#--> Agregar un atributo a entidades para que indique si esta activo el dependencia->cargo->persona
+#--> En Nota temporal, hace el listado, mostrando solo edit|destroy si todavia tiene estado pendiente
+#--> En Nota temporal, el show deberia ir al mostrar de nota si ya tiene una nota relacionada(circulacion, nota_id) sino debiria ir al mostrar nota_temporal
+#--> Distinguir si nota esta en circulacion o pendiente, texto_remitente o remitente, texto_destinatario o destinatario
+#--> Listar notas pendientes y permitir darle alta
+#--> Desde la interfaz de secretaria de mesa , se deberia poder ver las notas temporales y darle entrada
+#--> En el buscar nota_temporal. sino encuentra nada mostrar un mensaje
+#--> Permitir ordenar en listado de notas temporales
+#--> Permitir buscar en listado de notas temporales vista departamento
+#--> Si una nota tiene una nota_temporal asociada, no se deberia poder eliminar
+#--> Que no se pueda editar la dependencia facultad de Cs Ex.. ID: 1
+#--> Indicar cuando la nota es cargada por mesa de entrada o por departamentos.
+#--> Notas temporales solo pueden ser dadas de altas por secretarios de departamentos
+#--> Solo tengo que entrar a editar note pendiente si esta no fue cargada o procesada en el sistema
+#--> Permitir buscar en listado de notas temporales vista mesa de entrada
+#--> Cuando se da de alta una entidad, si hay otra con (mismo cargo, dependencia) preguntar si desea poner es_actual en false a la otra
+#--> Dar la posibilidad de agregar multiples destinatarios
+#--> Cuando se da de alta una nota temporal o en cualquier momento, se deberia mostrar un cupon en PDF para que lo imprima y lo lleven a mesa de entrada
+#--> NO ANDA CAMBIAR CONTRASEÑA EN PROFILE
+#--> Agregar enlaces a profile edit y password
+#--> Cuando editas el email en profile si esta vacio te da error de duplicado, deberia permitir poner un email vacio
+#--> Permitir buscar notas por fecha, sin ingresar separador
+#--> Permitir buscar notas pendientes por fecha, sin ingresar separador
+#--> Quitar botones de filtrados en las barras de herramientas y dejar solo el input como en notas
+#--> Permitir resetear el password desde el administrador
+#--> En nueva entidad remota, cuando doy de alta una dependencia me setea el nombre en la vista como undefined
+#--> Actualmente estoy haciendo alta de entidad en notas, tengo que ver la forma de que una vez dado de alta lo setee en remitente o destinatario usando hidden_params. ahora lo puse para json pero en realidad usa js asi que hay que tocar ahi
+#--> En nueva persona se puede seleccionar el cargo y la dependencia
+#--> Permitir buscar por codigo en notas
+#--> No permitir eliminar una persona si tiene notas asociadas
+#--> Cuando la persona no existe no se ve la entidad que la tenia
+#--> Permitir incluir +/* en las busquedas significando o/y respectivamente
+#--> En notas_temporales cuando vas a editar, no aparece seleccionado el remitente que se especifico previamente
+#--> En notas pendientes cuando ordenas por remitente o destinatario omite algunos resultados
+#--> ELIMINAR LA INTERFAZ DE ROLES(ABM)
+#--> No anda el campo date en editar nota
+#--> Dejo de funcionar el div que muestra y oculta pisar todas las autoridades en alta de entidades. esto es porque el div tenia el mismo id que el campo y yo se lo elimine, volver a hacerlo bien
+#--> El show de entidades es horrible y no tiene enlace volver
+#--> Arreglar la vista de editar personas, tiene enlaces a otras funcionalidades que tambien tienen que ser arregladas
+#--> En el form de editar nota, hay dos botones en destinatario y remitente uno es para llamar a nueva entidad para cualquier organismo y el otro es nueva entidad pero solo para dependencias de la facultad. Bueno, no anda, trae todo
+#--> Capturar error al intentar eliminar un tipo de nota
+#--> Cambiar nombre a entidad por Persona Cargo/Dependencia
+#--> Implementar la asignacion de nota dependiente. Hacer toda una funcionalidad que nos permita dada una nota asignarle o darle de baja una nota hija. Dada una nota asignarle una nota padre. Dada una nota temporal cargada por una secretaria procesarla como nota hija de alguna nota.
+#--> En la vista de mesa de entrada dejar solo el menu notas pendientes, notas, tipos de notas y menu que incluye todos los faltantes
+#--> El secretario de departamento tambien deberia ver las notas que se le han enviado
+#--> Permitir dar de alta notas relacionadas
+#--> Eliminar nota deberia hacerse logicamente, hay que actualizar los metodos de busqueda para que no seleccione eliminada=1
+#--> En fecha_eliminada nota deberia tener la hora tambien
+#--> No se deberia poder eliminar una nota logicamente si tiene dependencias o eliminar todas las dependencias
+#--> Chequear que no se pueda eliminar una nota si tine hijos, no se pueda eliminar tipo de notas si hay notas de ese tipo, a igual que dependencias, organismos, personas, cargos entidades
+#--> En editar nota dar la posibilidad de asociarla con otra mediante el codigo, o quitar asociacion
+#--> En buscar nota, que seleccione el tipo de nota

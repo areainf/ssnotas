@@ -1,0 +1,26 @@
+  <% if @tipo_nota.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tipo_nota.errors.count, "error") %> produjo que el Tipo de Documentación no se guardara:</h2>
+
+      <ul>
+      <% @tipo_nota.errors.each_with_index do |msg, i| %>
+  		  <li><%= msg[1] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div id="message-remote"></div>
+<%= form_for(@tipo_nota , :remote =>  params[:remote]) do |f| %>
+  <div class="form-group">
+    <p><%= f.label :nombre, :class=>"required" %><br>
+    <%= f.text_field :nombre, :class=>"form-control"%></p>
+  </div>
+  <div class="form-group">
+    <p><%= f.label :descripcion %><br>
+    <%= f.text_field :descripcion, :class=>"form-control"%></p>
+  </div>
+   <div class="form-group">
+    <center><%= f.submit "Aceptar", :class => 'btn  btn-primary' %></center>
+  </div>
+
+<% end %>

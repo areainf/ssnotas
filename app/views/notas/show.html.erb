@@ -1,0 +1,18 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(new_nota_path(:parent_id => @nota.id),"Asociar Nuevo Documento", "add16x16.png", {:title =>"Asociar Nuevo Documento", :alt=>"Asociar"})%>
+  <%= navBarLink(edit_nota_path(@nota),"Editar", "edit16x16.png", {:title =>"Editar Documento", :alt=>"Editar"})%>
+  <%= navBarLink(notas_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Documentos", :alt=>"Listar"})%>
+</nav>
+
+<div class="row">
+    <!-- <div class="panel">-->
+      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        <%= render 'show' %>
+    </div>
+    <!-- <aside class="menu_panel"> -->
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <%= render 'asociar' %>
+        </div>
+    <!-- </aside> -->
+
+</div>

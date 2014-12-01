@@ -1,0 +1,20 @@
+<% #Llamado cuando se crea un cargo con ajax
+#Simplemente informar el resultado del metodo create
+%>
+<% if @cargo.valid? %>
+
+  $("#message-remote").html('<p class="alert">El cargo se guardo correctamente</p>');
+  $("#listado-cargos").append("<%= escape_javascript(render("single_row_index"))%>");
+<%
+   else
+       strerror="<h3>"+pluralize(@cargo.errors.count, "Error")+ " produjo que el cargo no se guardara:</h3>"
+
+       @cargo.errors.each_with_index do |msg, i|
+          strerror +='<p class="error">'+ msg[1] +'</p>'
+       end
+
+%>
+
+$("#message-remote").html('<%= raw(strerror) %>');
+
+<% end %>

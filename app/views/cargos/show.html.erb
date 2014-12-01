@@ -1,0 +1,28 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(edit_cargo_path(@cargo),"Editar", "edit16x16.png", {:title =>"Editar Cargo", :alt=>"Editar"})%>
+  <%= navBarLink(cargos_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Cargos", :alt=>"Listar"})%>
+</nav>
+
+     <div class="box-key-values">
+        <h1>Detalle sobre el Cargo</h1>
+        <p>
+          <span class="text-key">Nombre:</span>
+          <%= @cargo.nombre %>
+        </p>
+        <p>
+          <span class="text-key">Descripcion:</span>
+          <%= @cargo.descripcion %>
+        </p>
+        <% if !@cargo.entidades.empty? %>
+        <hr>
+        <h2>Personas que tiene este cargo</h2>
+        <%
+ @cargo.entidades.each do |entidad|
+%>
+<p><span class="text-key"><%= entidad.persona.fullname%></span> <%= entidad.dependencia.alias_or_fullname%></p>
+<%
+ end
+%>
+
+        <% end%>
+     </div>

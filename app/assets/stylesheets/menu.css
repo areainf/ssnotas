@@ -1,0 +1,97 @@
+/* Reset */
+/* bootstrap
+.user_menu,
+.user_menu ul,
+.user_menu li,
+.user_menu a {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+*/
+/* Menu */
+/* bootstrap
+.user_menu {
+    height: 40px;
+}
+*/
+/* bootstrap
+.user_menu li {
+    position: relative;
+    list-style: none;
+    float: left;
+    display: block;
+    height: 40px;
+    padding-left: 40px;
+}
+
+/* Links */
+/* bootstrap
+.user_menu li a {
+    display: block;
+    margin: 6px 0;
+    line-height: 20px;
+    text-decoration: none;
+    padding:2px 10px;
+    color:#333;
+    text-decoration: none;
+    border-radius: 3px;
+    border-bottom: 2px #0081DC solid;
+}
+
+
+.user_menu li:hover > a { color: #0081DC; }
+*/
+/* Sub Menu */
+/* bootstrap
+.user_menu ul {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    opacity: 0;
+    background: #EEEEEE;
+    z-index: 1;
+}
+
+.user_menu li:hover > ul { opacity: 1; }
+
+.user_menu ul li {
+    height: 0;
+    overflow: hidden;
+    padding: 0px;
+}
+
+.user_menu li:hover > ul li {
+    height: 36px;
+    overflow: visible;
+    padding: 0;
+    z-index: 2;
+
+}
+*/
+/*ANCHO DEL SUBMENU*/
+/* bootstrap
+.user_menu ul li a {
+    padding: 4px 20px 4px 20px;
+    margin: 0;
+    border: none;
+
+}
+*/
+
+
+ul.dropdown-menu li a {
+    text-decoration: none;
+    padding:2px 10px;
+    color:#333;
+    text-decoration: none;
+
+}
+
+
+ul.dropdown-menu  li:hover > a {
+  color: #0081DC;
+}
+
+

@@ -1,0 +1,19 @@
+<script>
+<%= helper_script_dialog_create('openEstadoNota','modal-estado_nota',new_estado_nota_path(:remote=>true,:listado=>true),"Nuevo Estado",400,350) %>
+<%= helper_script_dialog_edit('openEditEstadoNota','modal-estado_nota',"Editar Estado de Documentos",400,350) %>
+</script>
+
+<%
+cabecera = [{:size=>1, :name=>"ID"},
+            {:size=>4, :name=>"Nombre",:sort=>'nombre'},
+            {:size=>5, :name=>"Descripción"},
+           ]
+%>
+<% if ! mobile_device? %>
+  <%= helper_datagrid_header("Listado de Estados",{:controller=>'estados_nota', :action=>'index'},{:label=>'Nuevo Estado',:action=>"return openEstadoNota();", :remote=>true},cabecera,'listado-estado_nota') %>
+<% else %>
+  <%= helper_datagrid_header("Listado de Estados",{:controller=>'estados_nota', :action=>'index'},{:label=>'Nuevo Estado',:action=>new_estado_nota_path },cabecera,'listado-estado_nota') %>
+  <% end %>
+<div id="listado-estado_nota" class="paginaremota">
+<%= render partial: 'row_index' %>
+</div>

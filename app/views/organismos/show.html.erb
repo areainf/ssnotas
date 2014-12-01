@@ -1,0 +1,31 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(edit_organismo_path(@organismo),"Editar", "edit16x16.png", {:title =>"Editar Organismo", :alt=>"Editar"})%>
+  <%= navBarLink(organismos_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Organismos", :alt=>"Listar"})%>
+</nav>
+
+
+
+
+
+<div class="box-key-values">
+<h1>Detalles sobre el Organismo</h1>
+<p>
+  <span class="text-key">Nombre:</span>
+  <%= @organismo.nombre %>
+</p>
+<p>
+  <span class="text-key">Alias:</span >
+  <%= @organismo.alias %>
+</p>
+
+<p>
+  <span class="text-key">Descripcion:</span >
+  <%= @organismo.descripcion %>
+</p>
+
+<p>
+  <span class="text-key">Codigo:</span >
+  <%= @organismo.codigo %>
+</p>
+</div>
+

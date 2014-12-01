@@ -1,0 +1,15 @@
+<% #Llamado cuando se crea un tipo_nota con ajax
+#Simplemente informar el resultado del metodo create
+%>
+<% if @tipo_nota.valid? %>
+ $('#tipo_nota_<%= @tipo_nota.id %>').replaceWith("<%= escape_javascript(render("single_row_index"))%>");
+$("#modal-tipo_nota").dialog( "close" );
+<%
+   else
+       strerror="<h3>"+pluralize(@tipo_nota.errors.count, "Error")+ " produjo que el Tipo de Documentación no se guardara:</h3>"
+       @tipo_nota.errors.each_with_index do |msg, i|
+          strerror +='<p class="error">'+ msg[1] +'</p>'
+       end
+%>
+$("#message-remote").html('<%= raw(strerror) %>');
+<% end %>

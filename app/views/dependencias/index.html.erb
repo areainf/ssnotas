@@ -1,0 +1,21 @@
+<script>
+<%= helper_script_dialog_create('openDependencia','modal-dependencia',new_dependencia_path(:remote=>true,:listado=>true),"Nueva Dependencia",600,450) %>
+<%= helper_script_dialog_edit('editDependencia','modal-dependencia',"Editar Dependencia",600,450) %>
+</script>
+
+<%
+cabecera = [{:size=>1, :name=>"ID"},
+            {:size=>3, :name=>"Nombre",:sort=>'nombre'},
+            {:size=>2, :name=>"Descripción"},
+            {:size=>1, :name=>"Codigo",:sort=>'codigo'},
+            {:size=>3, :name=>"Organismo",:sort=>'organismo'},
+           ]
+%>
+<% if ! mobile_device? %>
+  <%= helper_datagrid_header("Listado de Dependencias",{:controller=>'dependencias', :action=>'search'},{:label=>'Nueva Dependencia',:action=>"return openDependencia();", :remote=>true},cabecera,'listado-dependencias') %>
+<% else %>
+  <%= helper_datagrid_header("Listado de Dependencias",{:controller=>'dependencias', :action=>'search'},{:label=>'Nueva Dependencia',:action=>new_dependencia_path },cabecera,'listado-dependencias') %>
+  <% end %>
+<div id="listado-dependencias" class="paginaremota">
+<%= render partial: 'row_index' %>
+</div>

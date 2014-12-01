@@ -1,0 +1,20 @@
+- if @persona.errors.any?
+  #error_explanation
+    %h2= pluralize(@persona.errors.count, "error") + " produjo que la persona no se guardara:"
+    %ul
+      - @persona.errors.each_with_index do |msg, i|
+        %li= msg[1]
+#persona-error
+= form_for(@persona , :remote => params[:remote], :html=>{:role=>"form", :'data-type' => 'json'})  do |f| 
+  .form-group.required
+    %label.label-bstp-horizontal.control-label{for: "nombre"} Nombre
+    = f.text_field :nombre, :class => 'form-control'
+  .form-group
+    %label.label-bstp-horizontal.control-label{for: "apellido"} Apellido
+    = f.text_field :apellido, :class => 'form-control'
+  .form-group
+    %label.label-bstp-horizontal.control-label{for: "email"} Email
+    = f.text_field :email, :class => 'form-control'
+  .form-group
+    %center 
+      = f.submit "Aceptar", :class => 'btn btn-primary'

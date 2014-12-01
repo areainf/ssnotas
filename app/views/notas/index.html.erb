@@ -1,0 +1,110 @@
+<input type="hidden" id="page" value="<%= params[:page] %>" />
+<input type="hidden" id="rows" value="<%= params[:rows] %>" />
+<input type="hidden" id="direction" value="<%= params[:direction] %>" />
+<input type="hidden" id="sort" value="<%= params[:sort] %>" />
+<div class="datagrid">
+    <div class="row datagrid-caption">
+        <div class="col-sm-5 col-md-5  col-xs-5 col-lg-5">
+           <h2>Listado de Documentos</h2>
+        </div>
+        <div class="col-sm-2 col-md-2  col-xs-2 col-lg-2 col-md-offset-3">
+          <select onchange="return datagrid_search_action(1);" id="perpage" name="perpage">
+            <option value="">Todos</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+          </select>
+        </div>
+        <div class="col-sm-2 col-md-2 col-xs-2 col-lg-2">
+            <div style="text-align: right">
+                <%= link_to raw('<span class="glyphicon glyphicon-plus"></span> Nuevo Documento'), new_nota_path, :class=>"btn btn-primary" %>
+            </div>
+        </div>
+    </div>
+
+    <div class="row datagrid-caption">
+      <div class="col-sm-1 col-md-1 col-xs-1 col-lg-1">
+        <button type="button" class="btn btn-default btn-sm" onclick="ShowHideSearch();">
+          <span class="glyphicon glyphicon-search"></span> <span id="textoBusqueda">Buscar</span>
+        </button>
+      </div>
+      <div class="col-sm-11 col-md-11 col-xs-11 col-lg-11">
+        <div id="divsearch">
+            <form class="form-inline" onsubmit="datagrid_search_action(1); return false;">
+              <div class="form-group">
+                <%= text_field_tag "datagrid_search_field", session[:term], :placeholder=>"Introduce un texto", :size => "30", :class=>"form-control" %>
+              </div>
+              <div class="form-group">
+                <%= select_tag "nota_index_field_search_tipo_nota_id", options_from_collection_for_select( @tipos_notas, "id","nombre"), { prompt: "Cualquiera", :title=>"Tipo del Documento", :class=>"form-control", :onchange => "search_nota_type();"} %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :fecha_from,"Desde"%>
+                <%= text_field_tag :fecha_from,"", { :class=>"form-control", :size =>"10", :value => Time.now.at_beginning_of_month.strftime('%d-%m-%Y')} %>
+              </div>
+              <div class="form-group">
+                <%= label_tag :fecha_to,"Hasta"%>
+                <%= text_field_tag :fecha_to,"", {:class=>"form-control", :size =>"10", :value => Time.now.strftime('%d-%m-%Y')} %>
+              </div>
+              <div class="form-group">
+                  <button class="btn btn-info input-sm" onclick="return datagrid_search_action(1);">
+                      <span class="glyphicon glyphicon-search"></span>
+                  </button>
+              </div>
+          </form>
+
+        </div>
+      </div>
+
+
+    </div>
+</div>
+
+
+<%= render 'script_index.js' %>
+
+
+<%
+cabeceras = [
+            {:size=>2, :name=>"Descripción",:sort=>'tema'},
+            {:size=>2, :name=>"Observaciones"},
+            {:size=>1, :name=>"Fecha", :sort=>'fecha_nota'},
+            {:size=>1, :name=>"Ingreso", :sort=>'fecha_ingreso'},
+            {:size=>1, :name=>"Remitente",:sort=>'remitente'},
+            {:size=>2, :name=>"Creado", :sort=>'fecha_carga'},
+            {:size=>2, :name=>"Destinatario", :sort=>'destinatario'},
+           ]
+%>
+
+<div class="row  datagrid-th">
+<%
+   count = 0
+   cabeceras.each do |c|
+      size = c[:size]||1
+%>
+
+ <div class="col-xs-<%= size %> col-sm-<%= size %> col-md-<%= size %>  col-lg-<%= size %>">
+<%      count += size
+        name = c[:name] || ""
+        sort = c[:sort]
+        if sort.nil?
+%>
+          <%= name %>
+<%      else %>
+<a href="#" onClick="return SortBy('<%=  sort %>');"><%=  name %></a>
+<%      end %>
+        </div>
+<% end
+   if count < 12
+     size = 12 - count
+%>
+<div class="col-xs-<%= size %> col-sm-<%= size %> col-md-<%= size %>  col-lg-<%= size %>"></div>
+<% end %>
+</div>
+
+
+
+<div id="listado-notas" class="paginaremota">
+    <%= render partial: 'row_index' %>
+</div>
+</div>

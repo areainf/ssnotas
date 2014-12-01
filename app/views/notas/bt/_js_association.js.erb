@@ -1,0 +1,25 @@
+<script>
+if($("#parent_codigo").is('input:text') ){
+  $("#parent_codigo").tokenInput("/notas.json",{
+        crossDomain: false,
+        queryParam: "term",
+        propertyToSearch: "codigo",
+        theme: 'facebook',
+        minChars: "3",
+        tokenLimit: 1,
+        preventDuplicates: true,
+        resultsFormatter: function(nota){
+          cad = "["+nota.codigo+"]  - "+nota.tema;
+          return "<li> <p style='color: black' >" + cad + " </p> </li>"; },
+        tokenFormatter: function(nota) {
+          cad = "["+nota.codigo+"]  - "+nota.tema;
+          return "<li><p>" + cad + "</p></li>" },
+          noResultsText: "No hay coincidencias",
+          hintText: "Ingrese el codigo de la Nota",
+          searchigText: "Buscando Nota con ...",
+      });
+      $(document).on('ajax:success',"#nota-asociar", function(evt, data, status, xhr){
+        $("#notas-parent").html(data);
+      });
+}
+</script>

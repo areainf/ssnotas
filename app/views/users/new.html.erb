@@ -1,0 +1,49 @@
+<div class="form-v3">
+
+<h1>Agregar nuevos usuarios</h1>
+<%= render 'js_select_dependencias.js' %>
+<%= form_for @user do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %>  produjo que el usuario no se guardara:</h2>
+      <ul>
+        <% @user.errors.each_with_index do |msg, i| %>
+          <li><%= msg[0] %>: <%= msg[1] %> </li>
+        <% end %>
+      </ul>
+    </div>
+
+  <% end %>
+  <div class="field">
+    <%= f.label :username, "Nombre de Usuario", :class=>"required" %><br />
+    <%= f.text_field :username, :class=>"field" %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email, :class=>"field" %>
+  </div>
+  <div class="field">
+    <%= f.label :password, "Contraseña", :class=>"required" %><br />
+    <%= f.password_field :password, :class=>"field" %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirmar", :class=>"required" %><br />
+    <%= f.password_field :password_confirmation, :class=>"field" %>
+  </div>
+  <div class="field">
+    <%= f.label :rol, "Rol", :class=>"required" %><br>
+    <%= select_tag "user[rol_id]", options_from_collection_for_select(@roles, "id","name"), {:class=>"field", :onchange => "showHideDependencias();"} %>
+  </div>
+  <div class="field" id="div-dependencia">
+    <%= f.label :dependencia_id, "Dependencia" %><br>
+    <%= f.hidden_field :dependencia_id  %>
+    <%= select_tag "dependencia_id", options_from_collection_for_select(@dependencias, "id","nombre"), {:class=>"field", :onchange => "showHideDependencias();"} %>
+  </div>
+
+  <div class="actions">
+    <center><%= f.submit "Aceptar", :class => 'button-v1' %></center>
+  </div>
+<% end %>
+
+</div>

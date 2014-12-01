@@ -1,0 +1,32 @@
+<%
+if @cssclass.nil?
+  @cssclass= 'list-line-odd'
+end
+%>
+  <div id="persona_<%= @persona.id %>" class="row <%= $cssclass unless $cssclass.nil? %>">
+    <div class="datagrid-cell">
+      <div id="persona_<%= @persona.id %>_nombre" class="col-xs-3 col-sm-3 col-md-3  col-lg-3"><%= @persona.nombre %></div>
+      <div id="persona_<%= @persona.id %>_apellido" class="col-xs-3 col-sm-3 col-md-3  col-lg-3"><%= @persona.apellido %></div>
+      <div id="persona_<%= @persona.id %>_email" class="col-xs-3 col-sm-3 col-md-3  col-lg-3"><%= @persona.email %></div>
+      <div class="col-xs-3 col-sm-2 col-md-3  col-lg-3"  style="text-align: right;">
+
+         <div class="btn-group" style="margin-top: 3px; margin-bottom: 3px;">
+
+           <%= link_to image_tag("view16x16.png",{:align => "middle",  :alt=>"Ver", :border => "0"}), @persona ,{:title =>"Ver más información", :class=>"boton-row"}%>
+
+           <% if ! mobile_device? %>
+              <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), "#",{:title =>"Editar", :class=>"boton-row", :onClick=>"return editPersona('#{edit_persona_path(@persona,:remote=>true)}');"}%>
+              <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), delete_persona_path(@persona), {data: { confirm: 'Eliminara la persona. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row",:remote=>true }%>
+           <% else %>
+
+                 <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), edit_persona_path(@persona),{:title =>"Editar", :class=>"boton-row"}%>
+                 <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), @persona, {method: :delete, data: { confirm: 'Eliminara el persona. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row"}%>
+           <% end %>
+
+           <%=
+           #
+           %>
+         </div>
+      </div>
+    </div>
+  </div>

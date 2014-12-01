@@ -1,0 +1,211 @@
+/* --------------------------------------------------------------
+ * Author: Mauro Marozzi
+ * Email: mmarozzi@dc.exa.unrc.edu.ar
+*/
+/*formulario version 1*/
+.form-v1{
+	width: 450px;
+}
+.form-v1-big{
+	width: 750px;
+}
+.form-v1-big p{
+    margin:0;
+    padding: 0;
+}
+.form-v1, .form-v1-big{
+    font-size: 10px;
+	margin:2px auto;
+	padding: 2px;
+	background: -moz-linear-gradient(top,  #fcfff4 0%, #dfe5d7 40%, #b3bead 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfff4), color-stop(40%,#dfe5d7), color-stop(100%,#b3bead)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #fcfff4 0%,#dfe5d7 40%,#b3bead 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #fcfff4 0%,#dfe5d7 40%,#b3bead 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #fcfff4 0%,#dfe5d7 40%,#b3bead 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #fcfff4 0%,#dfe5d7 40%,#b3bead 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 ); /* IE6-9 */
+}
+
+label{
+	font-weight: bold;
+	font-size: 12px;
+}
+
+input.field-v1,
+select.field-v1{
+  background-color:#eee;
+  border:1px solid #999	;
+  color:#000;
+   margin:0.5em 0;
+  border-radius: 5px 5px;
+}
+input.field-v1:focus{
+  border-color:#AA0000;
+}
+
+select.field-v1, input.field-v1{
+     padding:2px;
+	 box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+}
+select.field-v1{
+	 -moz-appearance: none;
+ -webkit-appearance: none;
+ appearance: none;
+}
+input[type=submit].button-v1{
+  border:1px #2284a1 solid;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  padding-top: 0.55em;
+  padding-right: 1.5em;
+  padding-bottom: 0.6125em;
+  padding-left: 1.5em;
+  font-size: 1em;
+  background-color: #2ba6cb;
+  color: white;
+  border-radius: 5px 5px;
+}
+
+input[type=submit].button-v1:focus , input[type=submit].button-v1:hover{
+    background-color: #2284a1;
+}
+figcaption{
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px #6AA35F solid;
+    margin:0;
+    padding:0;
+
+}
+fieldset{
+    border:none;
+    margin: 0px 0px 0px 10px;
+    padding: 0px;
+}
+
+/*Estilo de los div que contienen labels e inputs */
+div.field-space{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.text-selected-obj{
+    font-size: 12px;
+    color: #AA0000;
+    font-weight: bold;
+}
+/*NUEVOS ESTILOS V2*/
+.form-v2{
+    width: 550px;
+}
+.form-v2-big{
+    width: 750px;
+}
+
+.form-v2, .form-v2-big{
+    margin: 0 auto;
+    padding: 0px;
+    font-size: 12px;
+}
+
+/*input[type=submit]*/
+.button-v2{
+  border:1px #2284a1 solid;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  padding-top: 0.55em;
+  padding-right: 1.5em;
+  padding-bottom: 0.6125em;
+  padding-left: 1.5em;
+  font-size: 1em;
+  background-color: #2ba6cb;
+  color: white;
+  border-radius: 5px 5px;
+}
+/*input[type=submit]*/
+.button-v2:focus , .button-v2:hover{
+    background-color: #2284a1;
+}
+
+.actions{
+    margin-top:20px;
+}
+
+
+/* OTRO INTENTO */
+div.form-v3{
+     text-align: left;
+     padding: 0px;
+     margin: 0 auto;
+     font-family: Arial,sans-serif;
+}
+div.form-v3 h1{
+    font-size: 20px;
+    text-align: left;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    color: #008000;
+}
+.form-v3 .field{
+    padding-left: 20px;
+    margin-top: 5px;
+}
+.form-v3 .field label{
+    font-style: italic;
+    font-weight:bold;
+    font-size: 18px;
+    border: 1px #F7FBFF solid;
+
+
+}
+.form-v3 .field input.small,
+.form-v3 .field select.small{
+    width: auto !important;
+}
+.form-v3 .field input.field,
+.form-v3 .field textarea.field,
+.form-v3 .field select.field,
+.form-v3 .field input[type="password"]{
+    font-size:12px;
+    padding: 5px 8px 5px 10px ;
+    margin-bottom: 10px;
+    border:1px solid #999 ;
+    width: 80%;
+    border-radius: 5px 5px;
+    background-color:  rgba(255, 255, 255, 1);
+    padding: 10px;
+    font-family: Arial;
+    color: #4b4b4b;
+    font-size: 18px;
+    -webkit-border-radius: 5px;
+    margin-bottom: 10px;
+}
+.form-v3 .field input.field:focus, .form-v3 .field textarea.field:focus, .form-v3 .field select.field:focus ,.form-v3 .field input[type="password"]:focus{
+    border-color: #ff5400; background-color:#EEEECC;
+}
+
+
+.form-v3 .field label.required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+    font-size: 18px;
+}
+.form-v3 .field label.small {
+    font-size: 14px;
+
+}
+.form-v3 .field .text-selected-obj{
+    font-size: 18px;
+    color: #AA0000;
+    font-weight: bold;
+    margin:0;
+    padding:0;
+}

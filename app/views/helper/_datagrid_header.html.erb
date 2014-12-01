@@ -1,0 +1,142 @@
+<script>
+/*Va el parametro page, porque si se estan listando 10 registros y estas en la pagina dos
+  y despues le pones que muestre mil y hay menos de mil da error porque en la pagina 2 no hay
+  nada, entonces cada vez que cambias la cantidad de rows, o el termino de busqueda pasas page como 1
+  solo debe tenerse en cuenta el valor anterior en caso de ordenacion*/
+  function datagrid_search_action(page,newsort){
+    url = '<%= search_action %>';
+    texto = encodeURIComponent($("#datagrid_search_field").val());
+    filas = $("#perpage").val();
+    direction = $("#direction").val();
+    sort = $("#sort").val();
+    if(page == undefined)
+      page = $("#page").val();
+
+    u = new UrlHelper(url);
+    u.setParam('term',texto);
+    u.setParam('rows',filas);
+    u.setParam('page',page);
+
+
+
+    if (newsort == sort){
+        u.setParam('sort',sort);
+        //dir = u.getParam('direction');
+        if (direction.toUpperCase() === "ASC")
+            u.setParam('direction','desc');
+        else
+            u.setParam('direction','asc');
+    }
+    else{
+      u.setParam('sort',newsort);
+      u.setParam('direction','asc');
+    }
+    $("#sort").val(u.getParam('sort'));
+    $("#direction").val(u.getParam('direction'));
+    $("#page").val(u.getParam('page'));
+
+
+    $.ajax({
+       type: 'GET'
+       , url: u.getFullUrl()
+       , dataType:'html'
+       , beforeSend: function(){
+                beforeSearchRecordV1('<%= div_result %>');
+         }
+       , complete: function(){
+
+         }
+       , success: function(data){
+           afterSearchRecordV1('<%= div_result %>',data);
+         }
+      });
+  }
+
+function SortBy(text){
+  return datagrid_search_action($("#page").val(),text);
+}
+
+
+</script>
+
+<input type="hidden" id="page" value="<%= params[:page] %>" />
+<input type="hidden" id="rows" value="<%= params[:rows] %>" />
+<input type="hidden" id="direction" value="<%= params[:direction] %>" />
+<input type="hidden" id="sort" value="<%= params[:sort] %>" />
+<div class="datagrid">
+  <div class="row datagrid-caption">
+    <div class="col-sm-5 col-md-5  col-xs-5 col-lg-5">
+      <h2><%= title %></h2>
+    </div>
+    <div class="col-sm-3 col-md-3 col-xs-3 col-lg-3">
+      <form onsubmit="datagrid_search_action(1); return false;">
+      <div class="input-group">
+        <%= text_field_tag "datagrid_search_field", session[:term], :placeholder=>"Introduce un texto", :size => "30", :class=>"form-control input-sm" %>
+        <div class="input-group-btn">
+          <button class="btn btn-info input-sm" onclick="return datagrid_search_action(1);">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </div>
+      </div>
+      </form>
+    </div>
+    <div class="col-sm-2 col-md-2  col-xs-2 col-lg-2">
+      <select onchange="return datagrid_search_action(1);" id="perpage" name="perpage">
+        <option value="">Todos</option>
+        <option value="2">2</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select>
+    </div>
+    <% if !defined? no_new_action %>
+    <div class="col-sm-2 col-md-2 col-xs-2 col-lg-2">
+      <div style="text-align: right">
+        <% if !new_action_remote %>
+          <%= link_to raw('<span class="glyphicon glyphicon-plus"></span>'+new_action_label), new_action, :class=>"btn btn-primary" %>
+        <% else %>
+           <a href="#" onClick="<%= new_action %>" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> <%= new_action_label %></a>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+
+
+
+</div>
+
+<!--
+   {{size=>1-12,name=>Nombre, :sort=>name_to_sort_o_nil}}
+-->
+
+<div class="row  datagrid-th">
+
+<%
+if cabeceras.present?
+   count = 0
+   cabeceras.each do |c|
+        size = c[:size]||1
+%>
+ <div class="col-xs-<%= size %> col-sm-<%= size %> col-md-<%= size %>  col-lg-<%= size %>">
+<%      count += size
+        name = c[:name] || ""
+        sort = c[:sort]
+        if sort.nil?
+%>
+          <%= name %>
+<%        else %>
+<a href="#" onClick="return SortBy('<%=  sort %>');"><%=  name %></a>
+<%        end %>
+        </div>
+<% end
+   if count < 12
+     size = 12 - count
+%>
+<div class="col-xs-<%= size %> col-sm-<%= size %> col-md-<%= size %>  col-lg-<%= size %>">
+<%   end
+   end %>
+</div>
+</div>
+
+

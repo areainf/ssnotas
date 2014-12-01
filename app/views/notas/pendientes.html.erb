@@ -1,0 +1,18 @@
+
+<%= render 'script_pendientes.js' %>
+<%
+cabecera = [
+            {:size=>2, :name=>"Remitente",:sort=>'remitente'},
+            {:size=>2, :name=>"Destinatario",:sort=>'destinatario'},
+            {:size=>1, :name=>"Fecha", :sort=>'fecha_nota'},
+            {:size=>1, :name=>"Descripción", :sort=>'tema'},
+            {:size=>1, :name=>"Observaciones"},
+            {:size=>1, :name=>"Creado", :sort=>'fecha_carga'},
+            {:size=>1, :name=>"Tipo", :sort=>'tipo_nota_id'},
+            {:size=>1, :name=>"Usuario", :sort=>'cargado_por_id'},
+           ]
+%>
+  <%= helper_datagrid_header("Listado de Dependencias",{:controller=>'notas', :action=>'search_pendientes'},{},cabecera,'listado-pendientes') %>
+<div id="listado-pendientes" class="paginaremota">
+<%= render partial: 'row_pendientes' %>
+</div>

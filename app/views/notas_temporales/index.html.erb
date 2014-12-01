@@ -1,0 +1,51 @@
+<%
+cabeceras = [
+            {:size=>2, :name=>"Remitente",:sort=>'remitente'},
+            {:size=>2, :name=>"Destinatario", :sort=>'destinatario'},
+            {:size=>1, :name=>"Fecha", :sort=>'fecha_nota'},
+            {:size=>2, :name=>"Descripción",:sort=>'tema'},
+            {:size=>1, :name=>"Codigo", :sort=>'codigo'},
+            {:size=>1, :name=>"Cargado"},
+            {:size=>1, :name=>"Estado", :sort=>"estado"},
+            {:size=>1, :name=>"T. Documento", :sort=>'tipo_nota_id'}
+           ]
+%>
+<%= helper_datagrid_header("Documentación Enviada",{:controller=>'notas_temporales', :action=>'search'},{},cabeceras,'listado-notas') %>
+  <div id="listado-notas" class="paginaremota">
+      <%= render partial: 'row_index' %>
+  </div>
+
+<%
+=begin
+%>
+<%= render 'script_index.js' %>
+<div class="toolbar">
+    <%= helper_input_search_field "nota_temporal_index_field_search" %>
+
+    <!--<div style="float: right;"><%= link_to  image_tag("add16x16.png",{:align => "middle"})+'Nueva Nota', new_nota_temporal_path %></div> -->
+</div>
+<div class="datagrid">
+<table id="table-notas_temporales" >
+    <caption>Listado de Notas Enviadas</caption>
+    <thead>
+      <tr class="col-head" id="header-notas_temporales">
+        <th><%= sortable "remitente", "Remitente" %></th>
+        <th><%= sortable "destinatario", "Destinatario" %></th>
+        <th><%= sortable "fecha_nota", "Fecha Nota" %></th>
+        <th>Descripción</th>
+        <th>Observaciones</th>
+        <th>Codigo</th>
+        <th><%= sortable "tipo_nota_id", "Tipo de Documento" %></th>
+        <th>Cargado por</th>
+        <th><%= sortable "estado", "Estado" %></th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render partial: 'row_index' %>
+    </tbody>
+</table>
+
+<%
+=end
+%>

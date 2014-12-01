@@ -1,0 +1,26 @@
+<%= render 'script_index.js' %>
+<script>
+<!--
+  <%= helper_script_dialog_create('openEntidad','modal-entidad',new_entidad_path(:remote=>true,:listado=>true),"Nueva Relación Cargo Persona",600,580) %>
+  <%= helper_script_dialog_edit('editEntidad','modal-entidad',"Editar Cargo Persona",600,540) %>
+  -->
+</script>
+<%
+cabecera = [
+            {:size=>3, :name=>"Persona",:sort=>'persona'},
+            {:size=>2, :name=>"Dependencia"},
+            {:size=>2, :name=>"Cargo",:sort=>'cargo'},
+            {:size=>2, :name=>"Miembro de la Facultad",:sort=>'es_facultad'},
+            {:size=>1, :name=>"Actual",:sort=>'actual'},
+           ]
+%>
+<div id="toolbar-entidad">
+<% if ! mobile_device? %>
+  <%= helper_datagrid_header("Listado de Relaciones Cargo/Persona",{:controller=>'entidades', :action=>'search'},{:label=>'Nueva Relación',:action=>"return openNuevaEntidad('modal-entidad');", :remote=>true},cabecera,'listado-entidades') %>
+<% else %>
+  <%= helper_datagrid_header("Listado de Relaciones Cargo/Persona",{:controller=>'entidades', :action=>'search'},{:label=>'Nueva Relación',:action=>new_entidad_path },cabecera,'listado-entidades') %>
+  <% end %>
+</div>  
+<div id="listado-entidades" class="paginaremota">
+<%= render partial: 'row_index' %>
+</div>

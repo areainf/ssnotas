@@ -1,0 +1,26 @@
+<%
+  if !@users.empty?
+  @users.each do |user| %>
+      <tr>
+        <td><%= user.username %></td>
+        <td><%= user.email %></td>
+        <td><%= user.rol.name unless user.rol.nil?%></td>
+        <td><%= user.dependencia.alias_or_fullname unless user.dependencia.nil? %></td>
+        <td><%= user.entidad.fullname unless user.entidad.nil? %></td>
+        <td class="col-action-button">
+            <%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver"}), user %>
+            <%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Editar", :alt=>"Editar"}), edit_user_path(user) %>
+            <%= link_to image_tag("pwd16x16.png",{:align => "middle", :title =>"Cambiar contraseña de acceso", :alt=>"PWD"}), editpwd_user_path(user) %>
+            <%= link_to image_tag("delete16x16.png",{:align => "middle", :title =>"Eliminar", :alt=>"Eliminar"}), user, method: :delete, data: { confirm: 'Confirma eliminar el usuario?' } %>
+       </td>
+      </tr>
+  <% end %>
+<%
+  else
+%>
+<tr>
+    <td colspan="6">
+<h2>No se encontraron resultados</h2>
+</td></tr>
+
+<% end %>

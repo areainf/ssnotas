@@ -1,0 +1,32 @@
+
+<div class="form-v3">
+    <div class="box-toolbar">
+        <ul>
+        <li><%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Cambiar contraseña de acceso", :alt=>"Editar Contraseña", :border => "0"})+ "Cambiar contraseña de acceso",  profile_password_path %></li>
+        </ul>
+    </div>
+
+ <h1>Editar Perfil</h1>
+<%= form_for @user, :url=>profile_update_path , :method => :post do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> produjo que el Perfil no se guardara:</h2>
+
+      <ul>
+      <% @user.errors.each_with_index do |msg, i| %>
+          <li><%= msg[1] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email , :class => 'field' %>
+  </div>
+
+  <div class="actions">
+    <center><%= f.submit "Aceptar", :class => 'button-v1' %></center>
+  </div>
+<% end %>
+</div>

@@ -1,0 +1,259 @@
+<script>
+/*Elimina div destinatarios*/
+function remove_destinatario(id){
+    div_id="div-destinatario_"+id;
+    $('#'+div_id).remove();
+}
+
+function setDestinatario(nombre,id){
+    div_id="div-destinatario_"+id;
+    if($('#'+div_id).length==0){
+         img = '<%= image_tag("delete16x16.png") %>';
+         ahref= '<a href="#" onclick="remove_destinatario('+id+');">'+img+'</a>';
+         hidden='<input type="hidden" name="destinatarios[dest_'+id+']" value="'+id+'">';
+         hidden1='<input type="hidden" name="destinatarios_name[dest_'+id+']" value="'+nombre+'">';
+         newdiv = '<div id="'+div_id+'"><p>'+ahref+'&nbsp;&nbsp;&nbsp;<span class="text-selected-obj">'+id+'--'+nombre+'</span>';
+         newdiv += hidden;
+         newdiv += hidden1;
+         newdiv +='</p></div>';
+         $('#destinatario_fullname').val("");
+         /*   $('#nota_destinatario_id').val(id);
+            $('#text_destinatario_id').html("["+id+"] - "+nombre);
+            */
+        $("#div-destinatarios").append(newdiv);
+    }
+}
+function setRemitente(nombre,id){
+    $('#remitente_fullname').val("");
+    $('#nota_remitente_id').val(id);
+    $('#text_remitente_id').html("["+id+"] - "+nombre);
+    $('#remitente_selected_fullname').val(nombre);
+
+}
+
+/*
+ * Abre una ventana para crear nuevos Remitentes
+ * */
+function openNuevoRemitente(esFacultad){
+    //Crea un div donde pondra el formulario
+    $('body').append("<div id='modal-remitente'></div>");
+    //Llama remotamente a la accion new del controlador entidades diciendole que muestre todos las entidades
+    url = "<%= url_for :controller =>"entidades", :action=>'new', :remote=>'true' %>";
+
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , beforeSend: function(){/*alert("Antes de enviar"); */}
+       , complete: function(){/*alert("Completo");*/}
+       , success: function(data){
+            $("#modal-remitente").html(data);
+       }
+    });
+    /*Especifica al div creado recientemente como dialog*/
+    $("#modal-remitente").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 600,
+        modal: true,
+        title: 'Nuevo Remitente',
+        close: function(event, ui) { $('#modal-remitente').remove();},
+
+    });
+    $("#modal-remitente").dialog( "open" );
+}
+
+/*
+ * Abre una ventana para crear nuevos Destinatarios
+ * */
+function openNuevoDestinatario(esFacultad){
+    $('body').append("<div id='modal-destinatario'></div>");
+        url = "<%= url_for :controller =>"entidades", :action=>'new', :remote=>'true',  'hidden_params[es_destinatario]'=>'true' %>";
+
+    $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"html"
+       , beforeSend: function(){
+            //alert("Antes de enviar");
+         }
+       , complete: function(){
+            //alert("Completo");
+         }
+       , success: function(data){
+            $("#modal-destinatario").html(data);
+         }
+    });
+
+    $("#modal-destinatario").dialog({
+        autoOpen: false,
+        height: 600,
+        width: 600,
+        modal: true,
+        title: 'Nuevo Destinatarios',
+        close: function(event, ui) { $('#modal-destinatario').remove();},
+
+    });
+    $("#modal-destinatario").dialog( "open" );
+}
+
+
+function postCreateEntidad(datajson){
+    /*Si era para remitente llamar a postCreateRemitente*/
+    /*Si era para destinatario llamar a postCreateDestinatario*/
+   data = JSON.parse(datajson);
+
+
+   if (data['es_destinatario'])
+        postCreateDestinatario(datajson);
+   else
+        postCreateRemitente(datajson);
+
+}
+function postCreateRemitente(datajson){
+    data = JSON.parse(datajson);
+    setRemitente(data['alias_or_fullname'],data['id']);
+    $("#modal-remitente").dialog( "close" );
+}
+function postCreateDestinatario(datajson){
+    data = JSON.parse(datajson);
+    setDestinatario(data['alias_or_fullname'],data['id']);
+    $("#modal-destinatario").dialog( "close" );
+}
+
+
+
+$( document ).ready(function() {
+    <% if @nota && !@nota.id.nil?
+           if !@nota.destinatario.nil?
+    %>
+                setDestinatario("<%= raw @nota.destinatario.alias_or_fullname %>","<%= raw @nota.destinatario_id %>");
+    <%
+           end
+           if !@nota.remitente.nil?
+    %>
+                setRemitente("<%= raw @nota.remitente.alias_or_fullname %>","<%= raw @nota.remitente_id %>");
+
+    <%
+           end
+       elsif params[:nota]
+           if !params[:nota]['remitente_id'].blank?
+    %>
+                setRemitente("<%= raw params['remitente_selected_fullname']%>","<%= raw params[:nota]['remitente_id']%>");
+    <%
+           end
+           if !params[:destinatarios].nil? && params[:destinatarios].length > 0
+                params[:destinatarios].each do |key, value|
+    %>
+                    setDestinatario("<%= raw params['destinatarios_name'][key]%>","<%= raw value %>");
+    <%
+                end
+           end
+       end
+    %>
+
+    $("#nota_fecha_nota" ).datepicker();
+    /*----------------------------------------*/
+
+    $('#remitente_fullname').autocomplete({
+        minLength: 0,
+        source: '<%=  find_remitentes_entidades_path(:json) %>',
+        focus: function(event, ui) {
+            $('#remitente_fullname').val(ui.item.alias_or_fullname);
+                return false;
+        },
+        select: function(event, ui) {
+                setRemitente(ui.item.alias_or_fullname, ui.item.id);
+                return false;
+        }/*,
+        response: function( event, ui ) {
+                alert(ui);
+        }*/
+    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+        .append( "<a> [" + item.id +"]" + item.alias_or_fullname+"</a>" )
+        .appendTo( ul );
+    };
+
+    $('#destinatario_fullname').autocomplete({
+        minLength: 0,
+        source: '<%=  find_destinatarios_entidades_path(:json) %>',
+        focus: function(event, ui) {
+            $('#destinatario_fullname').val(ui.item.alias_or_fullname);
+                return false;
+        },
+        select: function(event, ui) {
+                setDestinatario(ui.item.alias_or_fullname, ui.item.id);
+                return false;
+        }/*,
+        response: function( event, ui ) {
+                alert(ui);
+        }*/
+    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+        .append( "<a> [" + item.id +"]" + item.alias_or_fullname+"</a>" )
+        .appendTo( ul );
+    };
+
+
+    $('#nota_tema').autocomplete({
+        minLength: 3,
+        source: '<%=  find_by_notas_path(:json,:field=>'tema') %>',
+        focus: function(event, ui) {
+            $('#nota_tema').val(ui.item.tema);
+                return false;
+        },
+        select: function(event, ui) {
+                $('#nota_tema').val(ui.item.tema);
+                return false;
+        }
+    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+        return $( "<li>" )
+        .append( "<a>"+item.tema+"</a>" )
+        .appendTo( ul );
+    };
+
+
+
+
+  /* Indica que al hacer click en el enlace con id link_open_nuevo_remitente
+   * llame a la funcion de js openNuevoRemitente
+   * esto es para reemplazar el tag link_to_function que es deprecated en rails 4
+  */
+  $('#link_open_nuevo_remitente').click(function() {
+    openNuevoRemitente(false);
+    return false;
+  });
+  /* Indica que al hacer click en el enlace con id link_open_nuevo_destinatario
+   * llame a la funcion de js openNuevoRemitente
+   * esto es para reemplazar el tag link_to_function que es deprecated en rails 4
+  */
+  $('#link_open_nuevo_destinatario').click(function() {
+    openNuevoDestinatario(false);
+    return false;
+  });
+  $("#persona_ref_tokens").tokenInput("/personas.json",{
+    crossDomain: false,
+    queryParam: "term",
+    propertyToSearch: "nombre",
+    theme: 'facebook',
+    minChars: "3",
+    preventDuplicates: true,
+    resultsFormatter: function(persona){
+      var compleName = persona.nombre + ", " + persona.apellido;
+      return "<li> <p style='color: black' >" + compleName + " </p> </li>"; },
+    tokenFormatter: function(item) {
+      return "<li><p>" + (item.nombre + ", " +
+      item.apellido).substring(0,22) + "</p></li>" },
+      noResultsText: "No hay coincidencias",
+      hintText: "Ingrese el nombre de la persona",
+      searchigText: "Buscando persona con ...",
+    onAdd: function(persona){ }
+
+  });
+});
+
+
+
+
+</script>

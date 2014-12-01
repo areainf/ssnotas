@@ -1,0 +1,158 @@
+<div class="box-key-values">
+    <h1>Detalle sobre el Documento</h1>
+    <p>
+      <span class="text-key">Codigo:</span><span style="padding-right: 30px;">
+      <%= @nota.codigo %></span>
+      <%= image_tag(@barcode)%>
+    </p>
+    <p>
+      <span class="text-key">Referencia:</span>
+      <%= @nota.nro_referencia %>
+    </p>
+    <p>
+      <span class="text-key">Estado Nota:</span>
+      <%= @nota.estado_nota.nombre unless @nota.estado_nota.nil? %>
+    </p>
+    <p>
+      <span class="text-key">Descripción:</span>
+      <%= @nota.tema %>
+    </p>
+
+    <p>
+      <span class="text-key">Observaciones:</span>
+      <%= @nota.descripcion %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha ingreso:</span>
+      <%= l @nota.fecha_ingreso %>
+    </p>
+
+
+    <p>
+      <span class="text-key">Tipo de Documento:</span>
+      <%= @nota.tipo_nota.nombre %>
+    </p>
+
+    <p>
+      <span class="text-key">Remitente:</span>
+      <%= @nota.remitente.fullname %>
+    </p>
+
+    <p>
+      <span class="text-key">Destinatario:</span>
+      <%= @nota.destinatario.fullname %>
+    </p>
+    <p>
+      <span class="text-key">Menciona a las siguientes personas:</span>
+      <%= @nota.personas.map(& :fullname).join(' - ') unless @nota.personas.nil? %>
+    </p>
+    <p>
+      <span class="text-key">Fecha de la nota:</span>
+      <%= l @nota.fecha_nota %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha de carga:</span>
+      <%= l @nota.fecha_carga %>
+    </p>
+
+    <p>
+      <span class="text-key">Fecha de ingreso:</span>
+      <%= l @nota.fecha_ingreso %>
+    </p>
+
+    <p>
+      <span class="text-key">Tipo:</span>
+      <%= str_attr_tipo @nota.tipo %>
+    </p>
+
+    <p>
+      <span class="text-key">Estado:</span>
+      <%= str_attr_estado @nota.estado %>
+    </p>
+
+    <p>
+      <span class="text-key">Cargado por:</span>
+      <%= @nota.cargado_por.username %>
+    </p>
+
+    <p>
+      <span class="text-key">Recibido por:</span>
+      <%= @nota.recibido_por.username %>
+    </p>
+   <!--  <p>
+      <span class="text-key">Archivos:</span>
+      < % @nota_attachments.each do |p| % >
+      < % = link_to File.basename(p.filescan.url), p % >
+      < % end % >
+    </p> -->
+    <% 
+      if !@nota.nota_attachments.empty?
+    %>
+    <p>
+      <span class="text-key">Archivos:</span></p>
+    <% @nota.nota_attachments.each do |p|  %>
+      <div class="row" id="nota_attachment_<%= p.id %>">
+        <div class="col-md-11"><%= link_to File.basename(p.filescan.url), p %></div>
+        <div class="col-md-1">
+          <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), "#", { :title =>"Eliminar", :class => "boton-row", :onClick => "if (confirm('Esta seguro de eliminar el archivo adjunto?'))deleteArchivoAdjunto(#{p.id}); return false;"}%>
+        </div>
+      </div>
+    <% end %>
+  
+    <% end %>
+    
+</div>
+
+<% if ! @nota.notas_asociadas.empty? %>
+
+<br><hr><br>
+
+
+
+<%
+cabeceras = [
+            {:size=>3, :name=>"Descripción"},
+            {:size=>3, :name=>"Observaciones"},
+            {:size=>1, :name=>"Fecha"},
+            {:size=>2, :name=>"Remitente"},
+            {:size=>2, :name=>"Destinatario"},
+           ]
+%>
+<div class="datagrid-th">
+  <div class="row">
+    <div class="col-md-12"><h1>Documentos asociados</h1></div>
+  </div>
+  <div class="row">
+<%
+   count = 0
+   cabeceras.each do |c|
+      size = c[:size]||1
+%>
+
+    <div class="col-xs-<%= size %> col-sm-<%= size %> col-md-<%= size %>  col-lg-<%= size %>">
+<%      count += size
+        name = c[:name] || ""
+%>
+          <%= name %>
+     </div>
+<% end
+   if count < 12
+     size = 12 - count
+%>
+     <div class="col-xs-<%= size %> col-sm-<%= size %> col-md-<%= size %>  col-lg-<%= size %>"></div>
+<% end %>
+</div>
+</div>
+<% @nota.notas_asociadas.each do |nota| %>
+<div class="row">
+<div class="col-md-3"><%= truncate(nota.tema, lenght: 200) %></div>
+<div class="col-md-3"><%= truncate(nota.descripcion, lenght: 200) %></div>
+<div class="col-md-1"><%= l nota.fecha_nota unless nota.fecha_nota.nil? %></div>
+<div class="col-md-2"><%= nota.remitente.alias_or_fullname unless nota.remitente.nil? %></div>
+<div class="col-md-2"><%= nota.destinatario.alias_or_fullname unless nota.destinatario.nil? %></div>
+<div class="col-md-1"><%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver", :border => "0"}), nota %></div>
+</div>
+<% end %>
+<% end%>

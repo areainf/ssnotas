@@ -1,0 +1,31 @@
+<%
+if @notas.length > 0 #si tiene elementos
+  @notas.each do |nota| %>
+    <tr id="<%= "nota_#{nota.id}" %>" class="nota-tr <%= cycle('list-line-odd', 'list-line-even') %>">
+    <td><%= nota.id %></td>
+    <td><%= nota.remitente.alias_or_fullname unless nota.remitente.nil? %></td>
+    <td><%= nota.destinatario.alias_or_fullname unless nota.destinatario.nil? %></td>
+    <td><%= nota.tema %></td>
+    <td><%= nota.descripcion %></td>
+    <td><%= l nota.fecha_nota unless nota.fecha_nota.nil? %></td>
+    <td><%= l nota.fecha_ingreso unless nota.fecha_ingreso.nil? %></td>
+    <td><%= nota.tipo_nota.nombre unless nota.tipo_nota.nil?%></td>
+
+    <td class="col-action" nowrap="nowrap">
+        <%= link_to 'Ver', nota_recibida_path(nota) %>
+    </td>
+  </tr>
+<% end %>
+<tr class="tfoot">
+	<td colspan="9" class="col-footer">
+<%= will_paginate @notas, :id=>"div_pag_ajax", :previous_label=>"&lt;&lt;Ant", :next_label=>"Sig&gt;&gt;" %>
+</td></tr>
+
+<%
+else # si no tiene elementos
+%>
+<tr>
+    <td colspan="9">
+    <h2>No se encontro ningún elemento</h2>
+    </td></tr>
+<% end %>

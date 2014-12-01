@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @estado_nota.nombre %>
+</p>
+
+<p>
+  <strong>Descripcion:</strong>
+  <%= @estado_nota.descripcion %>
+</p>
+
+<%= link_to 'Edit', edit_estado_nota_path(@estado_nota) %> |
+<%= link_to 'Back', estados_nota_path %>

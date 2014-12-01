@@ -1,0 +1,125 @@
+<%= render 'js_form_new_nota.js' %>
+
+<%= form_for(@nota) do |f| %>
+  <% if @nota.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@nota.errors.count, "error") %> produjo que el Documento no se guardara:</h2>
+      <ul>
+      <% @nota.errors.each_with_index do |msg, i| %>
+  		  <li><%= msg[1] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<% if @parent.present?  %>
+<div class="box-key-values">
+    <h2>Asociar la entrada al siguiente Documento</h2>
+ <p>
+  <span class="text-key">Descripción:</span>
+  <%= @parent.tema %>
+</p>
+<p>
+  <span class="text-key">Codigo:</span>
+  <%= @parent.codigo %>
+</p>
+<p>
+  <span class="text-key">Tipo de Documento:</span>
+  <%= @parent.tipo_nota.nombre %>
+</p>
+
+<p>
+  <span class="text-key">Remitente:</span>
+  <%= @parent.remitente.fullname %>
+</p>
+
+<p>
+  <span class="text-key">Destinatario:</span>
+  <%= @parent.destinatario.fullname %>
+</p>
+
+<p>
+  <span class="text-key">Fecha del Documento:</span>
+  <%= l @parent.fecha_nota %>
+</p>
+<!-- este es para que sea asignado a la nueva nota -->
+ <%= hidden_field_tag "nota[parent_id]" ,@parent.id %>
+ <!-- este es por si hay error al crearlo que vuelva a buscar el parent -->
+ <%= hidden_field_tag "parent_id" ,@parent.id %>
+
+</div>
+<% end %>
+  <div class="field">
+        <label for="tipo" class="required">Tipo</label>
+        <%= f.select :tipo, hashTipo.map{|role| [ role[1], role[0] ]}  %>
+          <span style="margin-left; 10px"> <span>
+          <label for="nro_referencia">Numero de Referencia</label>
+          <%= f.text_field :nro_referencia, :size=>"20" %>
+          <span style="margin-left; 10px"> <span>
+          <label for="estado_nota">Estado</label>
+          <%= f.select(:estado_nota_id, EstadoNota.all.collect {|p| [ p.nombre, p.id ] }, include_blank: '') %>
+
+  </div>
+  <div class="field">
+        <label for="remitente_fullname" class="required">Remitente</label>
+        <p>
+        <%= f.hidden_field :remitente_id %>
+        <input type="text" name="remitente_fullname" id="remitente_fullname" size="40" class="field"/>
+        <%= link_to (image_tag("addModal.jpg",{:alt=>"Nuevo Remitente", :title=>"Abrir ventana Nuevo Remitente", :border => "0"})), "#", :id => "link_open_nuevo_remitente" %>
+        <br>
+        <span id="text_remitente_id" class="text-selected-obj">No ha seleccionado ningún remitente</span>
+        </p>
+        <input type="hidden" name="remitente_selected_fullname" id="remitente_selected_fullname" />
+  </div>
+
+
+
+
+  <div class="field">
+      <hr>
+  		<label for="destinatario_fullname" class="required">Destinatario</label>
+    		<p>
+    		<%= f.hidden_field :destinatario_id %>
+    		<input type="text" name="destinatario_fullname" id="destinatario_fullname" size="40" class="field"/>
+    		<%= link_to (image_tag("addModal.jpg",{:alt=>"Nuevo Destinatario", :title=>"Abrir ventana Nuevo Destinatario", :border => "0"})), "#", :id => "link_open_nuevo_destinatario" %>
+            <div id="div-destinatarios">
+
+    		</div>
+    		</p>
+  </div>
+  <div class="field">
+    <label for="persona_ref_tokens">Personas de Referencia</label><br>
+    <input type="text" name="persona_ref_tokens" id="persona_ref_tokens" class="field">
+  </div>
+  <div class="field">
+      <hr>
+    	<%= f.label :tipo_nota_id, "Tipo de Documento", :class=>"required"%>
+	    <%= f.select :tipo_nota_id, @tipos_notas.collect {|p| [ p.nombre, p.id ] },{},{ :class=>"field small"} %>
+	    <span>&nbsp;&nbsp;</span>
+	    <%= f.label :fecha_nota,"Fecha", :class=>"required"%>
+	    <%= f.text_field :fecha_nota, :class=>"field  small", :size =>"10", :value => (@nota.fecha_nota || Time.now).strftime('%d-%m-%Y') %>
+  </div>
+  <div class="field">
+	    <p><%= f.label :tema,"Descripción", :class=>"required" %><br />
+	    <%= f.text_field :tema, :class=>"field", :size=>"55" %></p>
+  </div>
+  <div class="field">
+	    <%= f.label :descripcion, "Observaciones" %><br />
+	    <%= f.text_area :descripcion, :class=>"field", :size=>"65x4" %>
+  </div>
+  <div class="field">
+      <%= f.fields_for :nota_attachments do |p| %>
+     <div class="field">
+       <%= p.label :filescan, "Subir Archivos" %><br>
+       <%= p.file_field :filescan, :multiple => true, name: "nota_attachments[filescan][]" %>
+     </div>
+   <% end %>
+  </div>
+  <div class="actions">
+    <center><%= f.submit "Aceptar", :class=>"button-v2" %></center>
+  </div>
+<% end %>
+
+<div id="div-add-modal" title="Nueva Dependencia" style="display:none"></div>
+
+

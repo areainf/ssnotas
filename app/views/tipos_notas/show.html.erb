@@ -1,0 +1,18 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(edit_tipo_nota_path(@tipo_nota),"Editar", "edit16x16.png", {:title =>"Editar Tipo de Documento", :alt=>"Editar"})%>
+  <%= navBarLink(tipos_notas_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Tipos de Documentos", :alt=>"Listar"})%>
+</nav>
+
+<div class="box-key-values">
+<h1>Detalle sobre el Tipo de Documento</h1>
+<p>
+  <span class="text-key">Nombre:</span>
+  <%= @tipo_nota.nombre %>
+</p>
+
+<p>
+  <span class="text-key">Descripcion:</span>
+  <%= @tipo_nota.descripcion %>
+</p>
+</div>
+

@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tema: MyString
+  descripcion: MyString
+  fecha_nota: 2013-10-17
+  fecha_carga: 2013-10-17
+  codigo: MyString
+  tipo_nota_id: 
+  remitente_id: 
+  remitente: MyString
+  destinatario_id: 
+  destinatario: MyString
+  cargado_por_id: 
+  estado: 1
+  nota_id: 
+
+two:
+  tema: MyString
+  descripcion: MyString
+  fecha_nota: 2013-10-17
+  fecha_carga: 2013-10-17
+  codigo: MyString
+  tipo_nota_id: 
+  remitente_id: 
+  remitente: MyString
+  destinatario_id: 
+  destinatario: MyString
+  cargado_por_id: 
+  estado: 1
+  nota_id: 

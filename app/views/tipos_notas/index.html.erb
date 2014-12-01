@@ -1,0 +1,20 @@
+
+<script>
+<%= helper_script_dialog_create('openTipoNota','modal-tipo_nota',new_tipo_nota_path(:remote=>true,:listado=>true),"Nuevo Tipo de Documentación",600,350) %>
+<%= helper_script_dialog_edit('editTipoNota','modal-tipo_nota',"Editar Tipos de Documentación",600,250) %>
+</script>
+
+<%
+cabecera = [
+            {:size=>5, :name=>"Nombre",:sort=>'nombre'},
+            {:size=>5, :name=>"Descripción"},
+           ]
+%>
+<% if ! mobile_device? %>
+  <%= helper_datagrid_header("Listado de Tipos de Documentación",{:controller=>'tipos_notas', :action=>'search'},{:label=>'Nuevo Tipo',:action=>"return openTipoNota();", :remote=>true},cabecera,'listado-tipo_nota') %>
+<% else %>
+  <%= helper_datagrid_header("Listado de Tipos de Documentación",{:controller=>'tipos_notas', :action=>'search'},{:label=>'Nuevo Tipo',:action=>new_tipo_nota_path },cabecera,'listado-tipo_nota') %>
+  <% end %>
+<div id="listado-tipo_nota" class="paginaremota">
+<%= render partial: 'row_index' %>
+</div>

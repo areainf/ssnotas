@@ -1,0 +1,49 @@
+<%
+ if @notas_temporales.length > 0 #si tiene elementos
+
+    @notas_temporales.each do |nota_temporal| %>
+      <tr id="<%= "nota_temporal_#{nota_temporal.id}" %>" class="nota-temporal-tr <%= cycle('list-line-odd', 'list-line-even') %>">
+        <% if nota_temporal.ingresada? %>
+            <td><%= nota_temporal.nota.remitente.cargoname %></td>
+            <td><%= nota_temporal.nota.destinatario.cargoname %></td>
+        <% else %>
+
+            <td><%= if !nota_temporal.remitente.nil? then nota_temporal.remitente.cargoname else nota_temporal.texto_remitente end %></td>
+            <td><%= if !nota_temporal.destinatario.nil? then nota_temporal.destinatario.cargoname else nota_temporal.texto_destinatario end %></td>
+        <% end%>
+        <td><%= l nota_temporal.fecha_nota %></td>
+        <td><%= nota_temporal.tema %></td>
+        <td><%= nota_temporal.descripcion %></td>
+        <td><%= nota_temporal.codigo %></td>
+        <td><%= nota_temporal.tipo_nota.nombre %></td>
+        <td><%= nota_temporal.cargado_por.username %></td>
+        <td>
+            <%= str_attr_estado(nota_temporal.estado) %>
+            <%= if !nota_temporal.nota.nil? then l nota_temporal.nota.fecha_ingreso end %>
+
+        </td>
+        <td class="col-action-button">
+            <%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver"}), nota_temporal %>
+        <% if nota_temporal.estado == Nota::ESTADO_PENDIENTE %>
+            <%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Editar", :alt=>"Editar"}), edit_nota_temporal_path(nota_temporal) %>
+            <%= link_to image_tag("delete16x16.png",{:align => "middle", :title =>"Eliminar", :alt=>"Eliminar"}), nota_temporal, method: :delete, data: { confirm: 'Esta seguro que quiere Eliminar la Nota?' } %>
+        <% else %>
+          &nbsp;
+        <%end%>
+        </td>
+      </tr>
+    <% end %>
+
+    <tr class="tfoot">
+        <td colspan="11" class="col-footer">
+    <%= will_paginate $notas_temporales, :id=>"div_pag_ajax", :previous_label=>"&lt;&lt;Ant", :next_label=>"Sig&gt;&gt;" %>
+    </td></tr>
+
+<%
+else # si no tiene elementos
+%>
+<tr>
+    <td colspan="11">
+    <h2>No se encontro ningún elemento</h2>
+    </td></tr>
+<% end %>

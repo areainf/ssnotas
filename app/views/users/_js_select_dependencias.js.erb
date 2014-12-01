@@ -1,0 +1,20 @@
+<script>
+var rol_sec_dpto = <%= Rol::ROL_SEC_DPTO %>;
+function showHideDependencias(){
+    rol_id=$("#user_rol_id").val();
+    
+    if(rol_sec_dpto == rol_id){
+         //alert("Mostrar div");
+         $("#div-dependencia").show();
+         $("#user_dependencia_id").val($("#dependencia_id" ).val());
+    }
+    else{
+        //alert("Ocultar div");
+        $("#div-dependencia").hide();
+        $("#user_dependencia_id").val("");
+    }
+}
+$(document).ready(function() {
+    showHideDependencias();
+});
+</script>

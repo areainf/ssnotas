@@ -1,0 +1,84 @@
+<%= render 'js_form_remote.js' %>
+
+  <% if @entidad.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@entidad.errors.count, "error") %> produjo que la Entidad no se guardara:</h2>
+      <ul>
+      <% @entidad.errors.each_with_index do |msg, i| %>
+          <li><%= msg[1] %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%= form_for(@entidad , :remote =>  params[:remote])  do |f| %>
+  <%
+     #se puede pasar parametros al formulario para que luego sean procesados
+     #estos parametros tienen que estar dentro de la clave hidden_params
+     if params.key?(:hidden_params)
+         params[:hidden_params].each do |key, val|
+  %>
+            <%= hidden_field_tag "hidden_params["+key+"]", val %>
+  <%
+         end
+     end
+  %>
+
+
+  <div class="field">
+        <label for="persona_fullname">Persona</label>
+          <%= f.hidden_field :persona_id %>
+          <% if !params.key?(:fixed_persona_id)%>
+          <span style="font-size: 12px;">Para crear uno nuevo ingrese Apellido, Nombre, y presione el botón crear</span><br>
+          <input type="text" name="persona_fullname" id="persona_fullname" size="40" class="field-v1"/>
+          <%= link_to (image_tag("add-01.png",{:alt=>"Crear", :title=>"Crear la persona", :border => "0"})), "", :id => "link_crear_persona" %>
+          <br>
+          <span id="text_persona_id" class="text-selected-obj">No ha seleccionado ninguno todavía</span>
+          <% else %>
+          <span class="text-selected-obj"> <%= @entidad.persona.id %> - <%= @entidad.persona.fullname %></span>
+          <% end %>
+  </div>
+
+  <div class="field">
+        <label for="dependencia_fullname">Dependencia</label><br>
+            <%= f.hidden_field :dependencia_id %>
+            <% if !params.key?(:fixed_dependencia_id)%>
+                <input type="text" name="dependencia_fullname" id="dependencia_fullname" size="40" class="field-v1"/>
+                <%= link_to (image_tag("addModal.jpg",{:alt=>"Abrir Nueva", :title=>"Abrir ventana para crear Dependencia", :border=>"0"})), "", :id => "link_open_nueva_dependencia" %><br>
+                <span id="text_dependencia_id" class="text-selected-obj">No ha seleccionado ninguna todavía</span>
+            <% else %>
+                 <span class="text-selected-obj"> <%= @entidad.dependencia.id %> - <%= @entidad.dependencia.fullname %></span>
+            <% end %>
+  </div>
+  <div class="field">
+        <label for="cargo_fullname">Cargo</label>
+            <%= f.hidden_field :cargo_id %>
+            <% if !params.key?(:fixed_cargo_id)%>
+                          <span style="font-size: 12px;">Para crear uno nuevo ingrese el Nombre, y presione el botón crear</span><br>
+                <input type="text" name="cargo_fullname" id="cargo_fullname" size="40" class="field-v1"/>
+                <%= link_to (image_tag("add-01.png",{:alt=>"Crear", :title=>"Crear Cargo", :border => "0"})), "", :id => "link_crear_cargo" %><br>
+                <span id="text_cargo_id" class="text-selected-obj">No ha seleccionado ninguno todavía</span>
+            <% else %>
+                 <span class="text-selected-obj"> <%= @entidad.cargo.id %> - <%= @entidad.cargo.nombre %></span>
+            <% end %>
+  </div>
+  <% if params[:action]=="new" %>
+  <div class="field">
+        <label>Situación Actual</label>
+        <p>
+        <%= f.label :es_actual,  "La Persona seleccionada ocupa actualmente el cargo en la dependencia indicada?", :class=>"small" %>
+        <%= f.check_box :es_actual, {:onchange => 'showhide_replace_all_es_actual();'} %>
+        </p>
+
+        <div id="divreplace_all_es_actual">
+            <%= label_tag "replace_all_es_actual",  "Poner a las demas personas con este cargo en esta dependencia como no actuales?", :class=>"small" %>
+        <%= check_box_tag "replace_all_es_actual" %>
+        </div>
+  </div>
+  <% end %>
+
+  <div class="actions">
+  <center><%= f.submit "Aceptar", :class => 'button-v2' %></center>
+  </div>
+<% end %>
+

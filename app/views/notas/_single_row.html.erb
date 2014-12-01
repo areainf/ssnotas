@@ -1,0 +1,43 @@
+<%
+if @cssclass.nil?
+  @cssclass= 'list-line-odd'
+end
+%>
+  <div id="nota_<%= @nota.id %>" class="row <%= $cssclass unless $cssclass.nil? %>">
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <% if !@nota.notas_asociadas.empty? %>
+        <%= image_tag("folder16x16.png",{:align => "middle", :title =>"#{@nota.notas_asociadas.count}", :alt=>"#", :border => "0"}) %>
+        <% end %>
+        <% if !@nota.parent.blank? %>
+        <%= image_tag("pin16x16.png",{:align => "middle", :title =>"#{@nota.parent.tema}", :alt=>"#", :border => "0"}) %>
+        <% end %>
+        <%= truncate(@nota.tema, lenght: 200) %>
+</div>
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+<%= truncate(@nota.descripcion, lenght: 200) %>
+</div>
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+  <%= l @nota.fecha_nota unless @nota.fecha_nota.nil? %>
+</div>
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+  <%= l @nota.fecha_ingreso unless @nota.fecha_ingreso.nil? %>
+</div>
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+  <%= @nota.tipo_nota.nombre unless @nota.tipo_nota.nil?%>
+</div>
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+  <%= @nota.remitente.alias_or_fullname unless @nota.remitente.nil? %>
+</div>
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+  <%= @nota.destinatario.alias_or_fullname unless @nota.destinatario.nil? %>
+</div>
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"   style="text-align: right;">
+  <div class="btn-group col-button">
+
+    <%= link_to image_tag("thumb.png",{:align => "middle", :title =>"Ver información rápida", :alt=>"Ver", :border => "0"}), "#",{:title =>"Ver Información Rápida", :class=>"boton-row", :onClick=>"return openShortcut(#{@nota.id});"} %>
+    <%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver", :border => "0"}), @nota,{:title =>"Ver Nota", :class=>"boton-row"} %>
+    <%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Editar", :alt=>"Editar", :border => "0"}), edit_nota_path(@nota),{:title =>"Editar Nota", :class=>"boton-row"} %>
+    <%= link_to image_tag("delete16x16.png",{:align => "middle", :title =>"Eliminar", :alt=>"Eliminar", :border => "0"}), @nota, method: :delete, data: { confirm: 'Eliminara la Nota. ¿Esta seguro?'},:title =>"Eliminar", :class=>"boton-row"  %>
+  </div>
+</div>
+</div>

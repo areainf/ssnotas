@@ -1,0 +1,33 @@
+<div class="box-key-values">
+    <div class="box-toolbar">
+        <ul>
+        <li><%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Editar", :alt=>"Editar", :border => "0"})+ "Editar",  edit_entidad_path(@entidad) %></li>
+        <li><%= link_to image_tag("list16x16.png",{:align => "middle", :title =>"Ir al Listado", :alt=>"Listar", :border => "0"})+"Listado", entidades_path %></li>
+        </ul>
+    </div>
+<h1>Detalle sobre la Relación entre el Cargo y la Persona</h1>
+<p>
+  <span class="text-key">Persona:</span>
+  <%= @entidad.persona.fullname unless  @entidad.persona.nil? %>
+</p>
+
+<p>
+  <span class="text-key">Dependencia:</span>
+  <%= @entidad.dependencia.nombre unless  @entidad.dependencia.nil? %>
+</p>
+
+<p>
+  <span class="text-key">Cargo:</span>
+  <%= @entidad.cargo.nombre unless @entidad.cargo.nil? %>
+</p>
+
+<p>
+  <span class="text-key">Es facultad:</span>
+  <%= @entidad.es_facultad %>
+</p>
+
+<p>
+  <span class="text-key">User:</span>
+  <%= @entidad.user %>
+</p>
+</div>

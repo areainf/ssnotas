@@ -1,0 +1,40 @@
+
+<script language="JavaScript">
+
+function changeEsFacultad(id){
+
+    url = "/entidades/"+id+"/change_es_facultad";
+     $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"json"
+       , beforeSend: function(){/*alert("Antes de enviar");*/ }
+       , complete: function(){/*alert("Completo");*/}
+       , success: function(data){
+            if(data["error"]){
+                alert("No se pudo cambiar la condición");
+            }
+       }
+    });
+    //change_es_facultad
+}
+function changeEsActual(id){
+    //change_es_actual
+
+    url = "/entidades/"+id+"/change_es_actual";
+     $.ajax({
+       type: "GET"
+       , url: url
+       , dataType:"json"
+       , beforeSend: function(){/*alert("Antes de enviar");*/ }
+       , complete: function(){/*alert("Completo");*/}
+       , success: function(data){
+            if(data["error"]){
+                alert("No se pudo cambiar la condición");
+            }
+       }
+    });
+}
+
+</script>
+

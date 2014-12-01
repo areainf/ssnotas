@@ -1,0 +1,29 @@
+<h1>Listing notas_attachment</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nota</th>
+      <th>Filescan</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @notas_attachment.each do |nota_attachment| %>
+      <tr>
+        <td><%= nota_attachment.nota_id %></td>
+        <td><%= nota_attachment.filescan %></td>
+        <td><%= link_to 'Show', nota_attachment %></td>
+        <td><%= link_to 'Edit', edit_nota_attachment_path(nota_attachment) %></td>
+        <td><%= link_to 'Destroy', nota_attachment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Nota attachment', new_nota_attachment_path %>

@@ -1,0 +1,22 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(@nota,"Mostrar", "view16x16.png", {:title =>"Mostrar Documento", :alt=>"Mostrar"})%>
+  <%= navBarLink(notas_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Documentos", :alt=>"Listar"})%>
+</nav>
+
+
+
+<!-- <div class="form-v3"> -->
+    <h1>Editar Documento</h1>
+    <!-- <div class="panel">-->
+      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        <%= render 'form_edit' %>
+      </div>
+    <!-- <aside class="menu_panel"> -->
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <%= render 'asociar' %>
+        <br>
+        <%= render 'dependiente'%>
+        </div>
+    <!-- </aside>-->
+<!-- </div>-->
+

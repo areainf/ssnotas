@@ -1,0 +1,74 @@
+<div class="box-key-values">
+    <h1>Detalle sobre el Documento</h1>
+    <p>
+      <span class="text-key">Descripción:</span>
+      <%= @nota.tema %>
+    </p>
+
+<p>
+  <span class="text-key">Observaciones:</span>
+  <%= @nota.descripcion %>
+</p>
+
+<p>
+  <span class="text-key">Fecha ingreso:</span>
+  <%= l @nota.fecha_ingreso %>
+</p>
+
+<p>
+  <span class="text-key">Codigo:</span>
+  <%= @nota.codigo %>
+</p>
+
+<p>
+  <span class="text-key">Tipo de Documento:</span>
+  <%= @nota.tipo_nota.nombre %>[<%= @nota.tipo_nota_id %>]
+</p>
+
+<p>
+  <span class="text-key">Remitente:</span>
+  <%= @nota.remitente.fullname %>[<%= @nota.remitente_id %>]
+</p>
+
+<p>
+  <span class="text-key">Destinatario:</span>
+  <%= @nota.destinatario.fullname %>[<%= @nota.destinatario_id %>]
+</p>
+
+
+<p>
+  <span class="text-key">Fecha del Documento</span>
+  <%= l @nota.fecha_nota %>
+</p>
+
+<p>
+  <span class="text-key">Fecha carga:</span>
+  <%= l @nota.fecha_carga %>
+</p>
+
+<p>
+  <span class="text-key">Fecha ingreso:</span>
+  <%= l @nota.fecha_ingreso %>
+</p>
+
+<p>
+  <span class="text-key">Tipo:</span>
+  <%= str_attr_tipo @nota.tipo %>
+</p>
+
+<p>
+  <span class="text-key">Estado:</span>
+  <%= str_attr_estado @nota.estado %>
+</p>
+
+<p>
+  <span class="text-key">Cargado por:</span>
+  <%= @nota.cargado_por.username %>
+</p>
+
+<p>
+  <span class="text-key">Recibido por:</span>
+  <%= @nota.recibido_por.username %>
+</p>
+
+</div>

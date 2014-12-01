@@ -1,0 +1,17 @@
+<% if ! @nota.notas_asociadas.empty? %>
+
+<div id="div_dependientes" >
+<% if flash[:notice] %>
+    <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+
+<h1 class="title">Sub Documentos </h1>
+<% @nota.notas_asociadas.each do |child| %>
+    <p style="padding-left: 10px;">
+      <%= image_tag("pin16x16.png",{:align => "middle", :title =>"", :alt=>"", :border => "0"}) %>
+      <%= link_to child.tema, child %>
+    </p>
+<% end %>
+</ul>
+<% end %>
+</div>

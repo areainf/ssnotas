@@ -1,0 +1,33 @@
+<%
+if @cssclass.nil?
+  @cssclass= 'list-line-odd'
+end
+%>
+  <div id="nota_<%= @nota.id %>" class="row <%= $cssclass unless $cssclass.nil? %>">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%= @nota.remitente.alias_or_fullname unless @nota.remitente.nil? %>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%= @nota.destinatario.alias_or_fullname unless @nota.destinatario.nil? %>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <%= truncate(@nota.tema, lenght: 200) %>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%= truncate(@nota.descripcion, lenght: 200) %>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= l @nota.fecha_nota unless @nota.fecha_nota.nil? %>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= l @nota.fecha_ingreso unless @nota.fecha_ingreso.nil? %>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+      <%= @nota.tipo_nota.nombre unless @nota.tipo_nota.nil?%>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"   style="text-align: right;">
+      <div class="btn-group col-button">
+        <%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver", :border => "0"}), nota_recibida_path(@nota),{:title =>"Ver Nota", :class=>"boton-row"} %>
+      </div>
+    </div>
+</div>

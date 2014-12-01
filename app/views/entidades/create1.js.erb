@@ -1,0 +1,27 @@
+<%
+#Este script es llamado luego de ejecutar la accion create en el controlador entidad
+#Y el formato es json
+%>
+<% if @entidad.errors.any? %>
+    var errores="";
+    <% @entidad.errors.each_with_index do |msg, i| %>
+          errores += "<%= msg[1] %>\n";
+    <% end %>
+  alert(errores);
+
+<% else
+ @hash_entidad = @entidad.as_json({:methods => [:fullname, :alias_or_fullname], :only => [:id, :es_facultad ]})
+    if (params.key?(:hidden_params) && params[:hidden_params].size > 0)
+        @hashjson = @hash_entidad.merge(params[:hidden_params])
+    else
+        @hashjson = @hash_entidad
+    end
+    @es_destinatario=false
+    if params.key?(:hidden_params)
+        @es_destinatario=params[:hidden_params][:es_destinatario] || false
+    end
+
+%>
+postCreateEntidad('<%= @hashjson.to_json().html_safe %>',<%= @es_destinatario %>);
+<% end %>
+

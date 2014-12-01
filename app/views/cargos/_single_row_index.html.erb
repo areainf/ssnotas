@@ -1,0 +1,32 @@
+<%
+if @cssclass.nil?
+  @cssclass= 'list-line-odd'
+end
+%>
+  <div id="cargo_<%= @cargo.id %>" class="row <%= @cssclass unless @cssclass.nil? %>">
+    <div class="datagrid-cell">
+      <div  class="col-xs-1 col-sm-1 col-md-1  col-lg-1"><%= @cargo.id %></div>
+      <div class="col-xs-5 col-sm-5 col-md-5  col-lg-5"><%= @cargo.nombre %></div>
+      <div class="col-xs-4 col-sm-4 col-md-4  col-lg-4"><%= @cargo.descripcion %></div>
+      <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2"  style="text-align: right;">
+
+         <div class="btn-group col-button">
+
+           <%= link_to image_tag("view16x16.png",{:align => "middle",  :alt=>"Ver", :border => "0"}), @cargo ,{:title =>"Ver más información", :class=>"boton-row"}%>
+
+           <% if ! mobile_device? %>
+              <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), "#",{:title =>"Editar", :class=>"boton-row", :onClick=>"return openEditCargo('#{edit_cargo_path(@cargo,:remote=>true)}');"}%>
+              <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), delete_cargo_path(@cargo), {data: { confirm: 'Eliminara el Cargo. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row",:remote=>true }%>
+           <% else %>
+
+                 <%= link_to image_tag("edit16x16.png",{:align => "middle", :alt=>"Editar", :border => "0"}), edit_cargo_path(@cargo),{:title =>"Editar", :class=>"boton-row"}%>
+                 <%= link_to image_tag("delete16x16.png",{:align => "middle",  :alt=>"Eliminar", :border => "0"}), @cargo, {method: :delete, data: { confirm: 'Eliminara el Cargo. ¿Esta seguro?' },:title =>"Eliminar", :class=>"boton-row"}%>
+           <% end %>
+
+           <%=
+           #
+           %>
+         </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,150 @@
+<nav class="navbar" role="navigation">
+  <%= navBarLink(edit_persona_path(@persona),"Editar", "edit16x16.png", {:title =>"Editar Persona", :alt=>"Editar"})%>
+  <%= navBarLink(personas_path,"Listado", "list16x16.png", {:title =>"Ir al Listado de Personas", :alt=>"Listar"})%>
+</nav>
+
+
+<div class="box-key-values">
+ <h1>Detalle sobre la Persona</h1>
+<p>
+  <span class="text-key">Nombre:</span>
+  <%= @persona.nombre %>
+</p>
+
+<p>
+  <span class="text-key">Apellido:</span>
+  <%= @persona.apellido %>
+</p>
+
+<p>
+  <span class="text-key">Email:</span>
+  <%= @persona.email %>
+</p>
+</div>
+
+<%
+  if !@persona.notas_from.empty?
+%>
+<div class="row">
+   <h2 style="text-align: center;">Notas Enviadas</h2>
+</div>
+<div class="row  datagrid-th">
+
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    Tema
+ </div>
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    Descripción
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    Fecha Nota
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    Tipo nota
+ </div>
+ <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2">
+    Destinatario
+ </div>
+</div>
+
+<%
+       @persona.notas_from.each do |nota|
+%>
+<div class="row <%=  cycle('list-line-odd', 'list-line-even') %>">
+
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    <%= nota.tema %>
+ </div>
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    <%= nota.descripcion %>
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    <%= l nota.fecha_nota unless nota.fecha_nota.nil? %>
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    <%= nota.tipo_nota.nombre unless nota.tipo_nota.nil?%>
+ </div>
+ <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2">
+    <%= nota.destinatario.alias_or_fullname unless nota.destinatario.nil? %>
+ </div>
+ <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2"  style="text-align: right;">
+         <div class="btn-group col-button">
+          <%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver", :border => "0"}), nota %>
+          <%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Editar", :alt=>"Editar", :border => "0"}), edit_nota_path(nota) %>
+          <%= link_to image_tag("delete16x16.png",{:align => "middle", :title =>"Eliminar", :alt=>"Eliminar", :border => "0"}), nota, method: :delete, data: { confirm: 'Eliminara la Nota. ¿Esta seguro?' }  %>
+          </div>
+ </div>
+</div>
+<% end %>
+<%else%>
+<br>
+<p class="notice">No ha enviado ninguna nota</p>
+<%end%>
+<br>
+<%
+  if !@persona.notas_to.empty?
+%>
+
+<div class="row">
+   <h2 style="text-align: center;">Notas Recibidas</h2>
+</div>
+<div class="row  datagrid-th">
+
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    Tema
+ </div>
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    Descripción
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    Fecha Nota
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    Tipo nota
+ </div>
+ <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2">
+    Remitente
+ </div>
+</div>
+
+<%
+       @persona.notas_to.each do |nota|
+%>
+
+<div class="row <%=  cycle('list-line-odd', 'list-line-even') %>" id="<%= "nota_#{nota.id}" %>">
+
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    <%= nota.tema %>
+ </div>
+ <div class="col-xs-3 col-sm-3 col-md-3  col-lg-3">
+    <%= nota.descripcion %>
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    <%= l nota.fecha_nota unless nota.fecha_nota.nil? %>
+ </div>
+ <div class="col-xs-1 col-sm-1 col-md-1  col-lg-1">
+    <%= nota.tipo_nota.nombre unless nota.tipo_nota.nil?%>
+ </div>
+ <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2">
+    <%= nota.remitente.alias_or_fullname unless nota.remitente.nil? %>
+ </div>
+ <div class="col-xs-2 col-sm-2 col-md-2  col-lg-2"  style="text-align: right;">
+     <div class="btn-group col-button">
+        <%= link_to image_tag("view16x16.png",{:align => "middle", :title =>"Ver más información", :alt=>"Ver", :border => "0"}), nota %>
+        <%= link_to image_tag("edit16x16.png",{:align => "middle", :title =>"Editar", :alt=>"Editar", :border => "0"}), edit_nota_path(nota) %>
+        <%= link_to image_tag("delete16x16.png",{:align => "middle", :title =>"Eliminar", :alt=>"Eliminar", :border => "0"}), nota, method: :delete, data: { confirm: 'Eliminara la Nota. ¿Esta seguro?' }  %>
+      </div>
+ </div>
+</div>
+
+
+
+
+
+
+
+<%end%>
+<%else%>
+<p class="notice">No ha recibido ninguna nota</p>
+<%end%>
+

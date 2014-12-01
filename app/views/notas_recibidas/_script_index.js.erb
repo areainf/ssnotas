@@ -1,0 +1,21 @@
+<%= helper_search_field({:input_id => 'nota_index_field_search', :grilla =>'table-notas' },
+{:controller => 'notas_recibidas', :action=>'search'}) %>
+
+
+<script language="JavaScript">
+   $(function() {
+    /*ASOCIAR EL TR  A EVENTOS
+      Al hacer click en cualquier fila de la tabla nos lleva
+      al methodo show de la nota-recibida */
+    $('.nota-tr').click(function() {
+        field_id=$(this).attr('id');
+        id = field_id.replace("nota_","");
+        dir = '<%=  url_for :controller => 'notas_recibidas', :action => 'show', :id => "reemplazar" %>';
+        url = dir.replace("reemplazar",id);
+        window.location=url;
+
+    });
+  });
+
+
+</script>

@@ -1,0 +1,55 @@
+
+- if @entidad.errors.any?
+  #error_explanation
+    %h2= pluralize(@entidad.errors.count, "error") + " produjo que la Entidad no se guardara:"
+    %ul
+      - @entidad.errors.each_with_index do |msg, i|
+        %li= msg[1]
+#entidad-error
+= form_for(@entidad , :remote =>  params[:remote], :html=>{:role=>"form", :'data-type' => 'json'})  do |f| 
+  / - if params.key?(:hidden_params)
+  /   - params[:hidden_params].each do |key, val|
+  /     = hidden_field_tag "hidden_params["+key+"]", val 
+
+  .form-group.required
+    %label.label-bstp-horizontal.control-label Persona
+    = f.hidden_field :persona_id 
+    .input-group
+      - json =  @entidad.persona.as_json(:methods => :fullname, :only => [:id])
+      %input.form-control{type: "text", name: "persona_tokens", id: "persona_tokens", data: {pre: [json]}}      
+      %span.input-group-addon
+        = link_to (image_tag("people.png",{:alt=>"Nueva Persona", :title=>"Abrir ventana Nueva Persona", :border => "0"})), "#", :id => "link_open_nueva_persona"
+  .form-group.required
+    %label.label-bstp-horizontal.control-label{for: "dependencia_tokens"} Dependencia
+    = f.hidden_field :dependencia_id
+    - if !params.key?(:fixed_dependencia_id)
+      - json =  @entidad.dependencia.as_json(:methods => :alias_or_fullname, :only => [:id])
+      %input.form-control{type: "text", name: "dependencia_tokens", id: "dependencia_tokens", data: {pre: [json]}}   
+    - else
+      %span.text-selected-obj= "#{@entidad.dependencia.id}  - #{@entidad.dependencia.fullname}"
+  .form-group.required
+    %label.label-bstp-horizontal.control-label{for: "cargo_tokens"} Cargo
+    = f.hidden_field :cargo_id
+    - if !params.key?(:fixed_cargo_id)
+      .input-group
+        - json =  @entidad.cargo.as_json(:only => [:id, :nombre])
+        %input.form-control{type: "text", name: "cargo_tokens", id: "cargo_tokens", data: {pre: [json]}}   
+        %span.input-group-addon          
+          = link_to (image_tag("add-cargo.png",{:alt=>"Nuevo Cargo", :title=>"Abrir ventana Nuevo Cargo", :border => "0"})), "#", :id => "link_open_nuevo_cargo"
+    - else
+      %span.text-selected-obj= "#{@entidad.cargo.id} - #{@entidad.cargo.nombre}"
+  - if params[:action] == "new" 
+    .form-group
+      %label Situación Actual
+      %p
+        = f.label :es_actual,  "La Persona seleccionada ocupa actualmente el cargo en la dependencia indicada?", :class=>"small" 
+        = f.check_box :es_actual, {:onchange => 'showhide_replace_all_es_actual();'} 
+
+      #divreplace_all_es_actual
+        = label_tag "replace_all_es_actual",  "Poner a las demas personas con este cargo en esta dependencia como no actuales?", :class=>"small" 
+        = check_box_tag "replace_all_es_actual"
+
+  .form-group
+    %center 
+      = f.submit "Aceptar", :class => 'btn btn-primary'
+= render '/entidades/bt/script_form'
